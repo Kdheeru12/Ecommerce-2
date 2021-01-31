@@ -1,9 +1,16 @@
 # Create your models here.
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 # Create your models here.
+class ExtendUser(AbstractUser):
+    email = models.EmailField(blank=False, max_length=254,verbose_name='email')
+
+    USERNAME_FIELD = 'username'
+    EMAIL_FIELD='email'
+
 class Customer(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE,blank=True,null=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,blank=True,null=True)
     name = models.CharField(max_length=300,blank=True,null=True)
     email = models.CharField(max_length=300,blank=True,null=True)
     def __str__(self):

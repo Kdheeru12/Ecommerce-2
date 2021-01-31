@@ -43,7 +43,7 @@ export default function Login() {
                                         <div className="form-group">
                                             <label htmlFor="review">Password</label>
                                             <input type="password" className="form-control" id="review"
-                                                   placeholder="Enter your password" name='password'ref={register({ required: true,min:5,max:10 })} onChange={setStateFromInput}  />
+                                                   placeholder="Enter your password" name='password' ref={register({ required: true,min:5,max:10 })} onChange={setStateFromInput}  />
                                             <span className="error-message">{errors.password && 'password is required'}</span>
                                         </div>
                                         <button type="Submit" className="btn-solid btn" >Place Order</button>

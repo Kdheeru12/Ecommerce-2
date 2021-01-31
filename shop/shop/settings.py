@@ -38,6 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'shop1.apps.Shop1Config',
+    'graphene_django',
+    'graphql_jwt.refresh_token.apps.RefreshTokenConfig',
+    'graphql_auth',
+    'corsheaders',
+
 ]
 
 MIDDLEWARE = [
@@ -48,6 +53,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'shop.urls'
@@ -127,8 +135,35 @@ EMAIL_HOST = 'smtp.gmail.com'
 
 EMAIL_HOST_USER = 'noreply.blozz@gmail.com'
 
-EMAIL_HOST_PASSWORD = 'Kmunna122001'
+EMAIL_HOST_PASSWORD = 'Kmunna@!22001'
 
 EMAIL_PORT = 587
 
 EMAIL_USE_TLS = True
+
+AUTH_USER_MODEL = 'shop1.ExtendUser'
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000'
+]
+
+GRAPHENE = {
+    'SCHEMA': 'shop1.schema.schema',
+    'MIDDLEWARE': [
+        'graphql_jwt.middleware.JSONWebTokenMiddleware',
+    ],
+}
+AUTHENTICATION_BACKENDS = [
+    # 'graphql_jwt.backends.JSONWebTokenBackend',
+    'graphql_auth.backends.GraphQLAuthBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+GRAPHQL_JWT = {
+    "JWT_ALLOW_ANY_CLASSES": [
+        "graphql_auth.mutations.Register",
+        "graphql_auth.mutations.VerifyAccount",
+        "graphql_auth.mutations.ObtainJSONWebToken",
+    ],
+    "JWT_VERIFY_EXPIRATION":True,
+    "JWT_LONG_RUNNING_REFRESH_TOKEN":True,
+}

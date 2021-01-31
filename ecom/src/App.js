@@ -4,6 +4,7 @@ import Checkout from './components/Checkout';
 import ProductList from './components/Cart';
 import Login from './Users/Login';
 import Layout from './covers/Layout';
+import Signup from './Users/Signup';
 
 function App() {
   return (
@@ -12,7 +13,7 @@ function App() {
           
         <Switch>
         
-          <Route path='/' component={ProductList}/>
+          <Route path='/' component={Signup}/>
         </Switch>
         
         </Layout>
