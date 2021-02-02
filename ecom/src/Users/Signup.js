@@ -3,32 +3,40 @@ import Wraper from '../components/Wraper'
 import { useForm } from 'react-hook-form';
 import LayoutTwo from '../covers/Layout1';
 import axios from 'axios'
-
-
+import { useMutation,gql } from '@apollo/client';
+import Error from '../covers/Error';
+const ADD_USER = gql`
+mutation ADD($email:String!,$username:String!,$password:String!){
+    register(
+      email:$email
+      username:$username
+      password1:$password
+      password2:$password
+    ) {
+      success
+      errors
+    }
+  }
+  `;
 export default function Signup() {
     const [obj, setObj] = useState({});
     const { register, handleSubmit, errors } = useForm(); 
-
+    const [addUser, { data,error }] = useMutation(ADD_USER);
+    const [ayerror,setayerror] = useState(null)
     const onSubmit = data => {
         console.log('sss');
         if (data !== '') {
-            axios({
-                url:'http://127.0.0.1:8000/graphl',
-                method:'POST',
-                data:{
-                    query:`mutation{
-                    register(
-                      email:${data.email}
-                      username:${data.username}
-                      password1:${data.password}
-                      password2:${data.password}
-                    ) {
-                      success
-                      errors
-                    }
-                  }`
-            }}).then(res =>console.log(res.data))
-            .catch(err => console.log(err.message))
+            console.log('dd');
+            const sent = async () => {
+            
+            const res =  await addUser({
+                variables:{email:data.email,username:data.username,password:data.password}
+            }).catch(err =>setayerror(err))
+            console.log(res);
+           
+            console.log('ddd');
+        }
+        sent()
         } else {
             errors.showMessages();
         }
@@ -49,7 +57,7 @@ export default function Signup() {
             <div className="container">
                 <div className="row">
                     <div className="col-lg-12">
-                        <h3>create account</h3>
+                        <h3>create account </h3>
                         <div className="theme-card">
                             <form  onSubmit={handleSubmit(onSubmit)} className="theme-form">
                                 <div className="form-row">
@@ -77,6 +85,7 @@ export default function Signup() {
                                     <br/>
                                     <button type='submit' className="btn btn-solid">create Account</button>
                                 </div>
+                            {ayerror && <Error setayerror={setayerror} error={ayerror} /> }
                             </form>
                         </div>
                     </div>
