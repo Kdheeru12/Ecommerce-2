@@ -5,6 +5,7 @@ import LayoutTwo from '../covers/Layout1';
 import { useMutation } from '@apollo/client';
 import Error from '../covers/Error';
 import { LOGIN_USER } from '../Graphql/Mutation';
+import { useHistory } from 'react-router-dom';
 // pattern: /[6-9]{1}[0-9]{9}/
 
 export default function Login(props) {
@@ -13,6 +14,8 @@ export default function Login(props) {
     const [ayerror,setayerror] = useState(null)
     const hello = (props.location.state) || null;
     const [loginUser] = useMutation(LOGIN_USER)
+    const [lerror, setlerror] = useState(null)
+    const history = useHistory()
     // console.log(hello);
     // console.log(props.location.state)
     // console.log();
@@ -27,7 +30,14 @@ export default function Login(props) {
                 }).catch(err =>setayerror(err))
                 console.log(res);
                 if(res){
-                    console.log('ddd');
+                    if(res.data.tokenAuth.success){
+                        localStorage.setItem('token',res.data.tokenAuth.token)
+                        localStorage.setItem('refresh',res.data.tokenAuth.refreshToken)
+                        history.push('/')
+                    }
+                    else if(res.data.tokenAuth.errors){
+                        setlerror(res.data.tokenAuth.errors.nonFieldErrors[0].message)
+                    }
                 }
             }
             sent()
@@ -65,6 +75,9 @@ export default function Login(props) {
                                             <span className="error-message">{errors.email && 'enter a valid email address'}</span>
                                             <input type="password" className="form-control" id="review"
                                                    placeholder="Enter your password" name='password' ref={register({ required: true,pattern: /^\S*$/ })} onChange={setStateFromInput}  />
+                                        </div>
+                                        <div className="form-group">
+                                        <span className="error-message">{lerror && lerror}</span>
                                         </div>
                                         <button type="Submit" className="btn-solid btn" >Place Order</button>
                                     </form>

@@ -28,7 +28,12 @@ const link = from([
  
 const client = new ApolloClient({ 
   cache: new InMemoryCache(),
-  link: link
+  link: link,
+  clientState:{
+     defaults:{
+       
+     }
+  }
 })
 
 ReactDOM.render(
