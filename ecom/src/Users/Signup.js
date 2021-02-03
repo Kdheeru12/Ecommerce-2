@@ -2,27 +2,21 @@ import React,{useState} from 'react'
 import Wraper from '../components/Wraper'
 import { useForm } from 'react-hook-form';
 import LayoutTwo from '../covers/Layout1';
-import axios from 'axios'
-import { useMutation,gql } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import Error from '../covers/Error';
-const ADD_USER = gql`
-mutation ADD($email:String!,$username:String!,$password:String!){
-    register(
-      email:$email
-      username:$username
-      password1:$password
-      password2:$password
-    ) {
-      success
-      errors
-    }
-  }
-  `;
+import { ADD_USER } from '../Graphql/Mutation';
+import { useHistory } from "react-router-dom";
+
 export default function Signup() {
     const [obj, setObj] = useState({});
     const { register, handleSubmit, errors } = useForm(); 
-    const [addUser, { data,error }] = useMutation(ADD_USER);
+    const [addUser, { error,data }] = useMutation(ADD_USER);
     const [ayerror,setayerror] = useState(null)
+    const [euname, seteuname] = useState(null)
+    const [eemail, seteemail] = useState(null);
+    const [epass, setepass] = useState(null);
+    const history = useHistory();
+    
     const onSubmit = data => {
         console.log('sss');
         if (data !== '') {
@@ -33,8 +27,29 @@ export default function Signup() {
                 variables:{email:data.email,username:data.username,password:data.password}
             }).catch(err =>setayerror(err))
             console.log(res);
-           
-            console.log('ddd');
+            if(res){
+                if(res.data.register.success){
+                    console.log('hhh');
+                    history.push({
+                        pathname: '/login',
+                        state: obj.username
+                    })
+                }
+                else if(res.data.register.errors){
+                    seteuname(null)
+                    setepass(null)
+                    seteemail(null)
+                    if (res.data.register.errors.username){
+                        seteuname(res.data.register.errors.username[0].message)
+                    }
+                    if (res.data.register.errors.email){
+                        seteemail(res.data.register.errors.email[0].message)
+                    }
+                    if (res.data.register.errors.password2){
+                        setepass(res.data.register.errors.password2[0].message)
+                    }
+                }
+            }
         }
         sent()
         } else {
@@ -64,6 +79,7 @@ export default function Signup() {
                                     <div className="col-md-6">
                                         <label htmlFor="email">UserName</label>
                                         <span className="error-message">{errors.username && 'Please enter your Name .'}</span>
+                                        <span className="error-message">{euname && euname}</span>
                                         <input type="text" className="form-control" id="username" name="username"
                                                placeholder="Name" required="" ref={register({ required: true})} onChange={setStateFromInput} />
                                     </div>
@@ -72,18 +88,20 @@ export default function Signup() {
                                     <div className="col-md-6">
                                         <label htmlFor="email">email</label>
                                         <span className="error-message">{errors.email && 'Please enter proper email address .'}</span>
+                                        <span className="error-message">{eemail && eemail}</span>
                                         <input type="text" className="form-control" id="email"
                                                placeholder="Email" name="email" required="" ref={register({ required: true, pattern: /^\S+@\S+$/i })} onChange={setStateFromInput} />
                                         <br></br>
                                     </div>
                                     <div className="col-md-6">
                                         <label htmlFor="review">Password</label>
-                                        <span className="error-message">{errors.password && 'password is required'}</span>
+                                        <span className="error-message">{errors.password && 'password is required' }</span>
+                                        <span className="error-message">{epass && epass}</span>
                                         <input type="password" className="form-control" id="review"
-                                               placeholder="Enter your password" name="password" required="" ref={register({ required: true, min: 5, max: 14  })} onChange={setStateFromInput} />
+                                               placeholder="Enter your password" name="password"w required="" ref={register({ required: true,pattern: /^\S*$/})} onChange={setStateFromInput} />
                                     </div>
                                     <br/>
-                                    <button type='submit' className="btn btn-solid">create Account</button>
+                                    <button type='submit'  className="btn btn-solid">create Account</button>
                                 </div>
                             {ayerror && <Error setayerror={setayerror} error={ayerror} /> }
                             </form>

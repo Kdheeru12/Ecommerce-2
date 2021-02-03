@@ -1,13 +1,34 @@
-import React from 'react';
+import React,{useState} from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { ApolloClient, ApolloProvider, InMemoryCache,HttpLink,from } from '@apollo/client';
+import { onError } from "@apollo/client/link/error";
+import Error from './covers/Error';
 
+export  const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors)
+    graphQLErrors.map(({ message, locations, path }) =>
+      console.log(
+        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
+      ),
+      <Error/>
+    );
+
+  else if (networkError)
+  console.log(`[Network error]: ${networkError}`);
+
+});
+
+const link = from([
+  errorLink,
+  new HttpLink({uri:'http://127.0.0.1:8000/graphl'})
+])
+ 
 const client = new ApolloClient({ 
   cache: new InMemoryCache(),
-  uri:'http://127.0.0.1:8000/graphl'
+  link: link
 })
 
 ReactDOM.render(

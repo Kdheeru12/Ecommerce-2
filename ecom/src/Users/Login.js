@@ -2,15 +2,36 @@ import React,{useState} from 'react'
 import Wraper from '../components/Wraper'
 import { useForm } from 'react-hook-form';
 import LayoutTwo from '../covers/Layout1';
+import { useMutation } from '@apollo/client';
+import Error from '../covers/Error';
+import { LOGIN_USER } from '../Graphql/Mutation';
+// pattern: /[6-9]{1}[0-9]{9}/
 
-export default function Login() {
+export default function Login(props) {
     const [obj, setObj] = useState({});
     const { register, handleSubmit, errors } = useForm(); 
-
+    const [ayerror,setayerror] = useState(null)
+    const hello = (props.location.state) || null;
+    const [loginUser] = useMutation(LOGIN_USER)
+    // console.log(hello);
+    // console.log(props.location.state)
+    // console.log();
     const onSubmit = data => {
 
         if (data !== '') {
-            alert('You submitted the form and stuff!');
+            console.log('ddd');
+            const sent = async () => {
+            
+                const res =  await loginUser({
+                    variables:{username:data.email,password:data.password}
+                }).catch(err =>setayerror(err))
+                console.log(res);
+                if(res){
+                    console.log('ddd');
+                }
+            }
+            sent()
+
         } else {
             errors.showMessages();
         }
@@ -19,8 +40,6 @@ export default function Login() {
     const setStateFromInput = (event) => {
         obj[event.target.name] = event.target.value;
         setObj(obj)
-        console.log(obj);
-
     }
     return (
         <LayoutTwo>
@@ -32,22 +51,24 @@ export default function Login() {
                         <div className="row">
                             <div className="col-lg-6">
                                 <h3>Login</h3>
+                                <span>{hello &&  `user registered email ${hello} please login`}</span>
                                 <div className="theme-card">
                                     <form onSubmit={handleSubmit(onSubmit)} className="theme-form">
                                         <div className="form-group">
                                         <label htmlFor="review">Phone Number</label>
+                                        <span className="error-message">{errors.email && 'enter a valid email address'}</span>
                                             <input type="text" className="form-control" id="review"
-                                                   placeholder="Enter your Number"  name="phone"  ref={register({ required: true, pattern: /[6-9]{1}[0-9]{9}/ })} onChange={setStateFromInput} />
-                                            <span className="error-message">{errors.phone && 'enter a valid phone number'}</span>
+                                                   placeholder="Enter your Number"  name="email"  ref={register({ required: true,pattern: /^\S+@\S+$/i  })} onChange={setStateFromInput} />
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="review">Password</label>
+                                            <span className="error-message">{errors.email && 'enter a valid email address'}</span>
                                             <input type="password" className="form-control" id="review"
-                                                   placeholder="Enter your password" name='password' ref={register({ required: true,min:5,max:10 })} onChange={setStateFromInput}  />
-                                            <span className="error-message">{errors.password && 'password is required'}</span>
+                                                   placeholder="Enter your password" name='password' ref={register({ required: true,pattern: /^\S*$/ })} onChange={setStateFromInput}  />
                                         </div>
                                         <button type="Submit" className="btn-solid btn" >Place Order</button>
                                     </form>
+                                    {ayerror && <Error setayerror={setayerror} error={ayerror} /> }
                                 </div>
                             </div>
                             <div className="col-lg-6 right-login">
