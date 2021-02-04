@@ -6,6 +6,7 @@ import Login from './Users/Login';
 import Layout from './covers/Layout';
 import Signup from './Users/Signup';
 import test from './test';
+import ProductHome from './components/ProductsHome';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route exact path='/' component={test}/>
           <Route path='/signup' component={Signup} />
           <Route path='/login' component={Login} />
+          <Route path='/products' component={ProductHome}/>
         </Switch>
         </Layout>
       </Router>

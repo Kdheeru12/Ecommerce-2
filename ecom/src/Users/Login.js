@@ -2,12 +2,12 @@ import React,{useState} from 'react'
 import Wraper from '../components/Wraper'
 import { useForm } from 'react-hook-form';
 import LayoutTwo from '../covers/Layout1';
-import { useMutation } from '@apollo/client';
+import { useApolloClient, useMutation } from '@apollo/client';
 import Error from '../covers/Error';
 import { LOGIN_USER } from '../Graphql/Mutation';
 import { useHistory } from 'react-router-dom';
+import { isLoggedInVar } from '..';
 // pattern: /[6-9]{1}[0-9]{9}/
-
 export default function Login(props) {
     const [obj, setObj] = useState({});
     const { register, handleSubmit, errors } = useForm(); 
@@ -33,6 +33,7 @@ export default function Login(props) {
                     if(res.data.tokenAuth.success){
                         localStorage.setItem('token',res.data.tokenAuth.token)
                         localStorage.setItem('refresh',res.data.tokenAuth.refreshToken)
+                        isLoggedInVar(true)
                         history.push('/')
                     }
                     else if(res.data.tokenAuth.errors){

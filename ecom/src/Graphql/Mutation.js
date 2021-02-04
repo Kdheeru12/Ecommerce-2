@@ -23,3 +23,22 @@ mutation TOKEN($username:String!,$password:String!){
       
     }
   }`;
+
+export const VERIFY_TOKEN = gql`
+mutation TOKEN($token:String!){
+  verifyToken(token:$token){
+		success
+    errors
+  }
+}
+`;
+export const REFRESH_TOKEN = gql`
+mutation REFRESH($token:String!){
+  refreshToken(refreshToken:$token){
+    success
+    errors
+    payload,
+    token
+  }
+}
+`;

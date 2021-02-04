@@ -1,50 +1,25 @@
-import React, {Component} from 'react';
-// import { connect } from 'react-redux'
+import React,{useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
-
-
-// import { getTotal, getCartProducts } from '../../reducers/index'
-// import { addToCart, addToWishlist, addToCompare } from '../../actions/index'
-// import {getVisibleproducts} from '../../services/index';
-// import ProductListItem from "./common/product-list-item";
-//import Breadcrumb from "../common/breadcrumb";
 import ProductList from './ProductList';
 import Wraper from './Wraper';
+import { useQuery } from '@apollo/client';
+import { ALL_PRODUCTS } from '../Graphql/Queries';
 
-class ProductHome extends Component {
-
-    constructor (props) {
-        super (props)
-
-        this.state = {
-            limit: 5,
-            hasMoreItems: true
-        };
-    }
-
-    // componentWillMount(){
-    //     this.fetchMoreItems();
-    // }
-
-    // fetchMoreItems = () => {
-    //     if (this.state.limit >= this.props.products.length) {
-    //         this.setState({ hasMoreItems: false });
-    //         return;
-    //     }
-    //     // a fake async api call
-    //     setTimeout(() => {
-    //         this.setState({
-    //             limit: this.state.limit + 5
-    //         });
-    //     }, 3000);
-
-
-    // }
-
-    render (){
-        const {products, addToCart, symbol, addToWishlist, addToCompare} = this.props;
-
+function ProductHome() {
+       const {loading,error,data } = useQuery(ALL_PRODUCTS) 
+       if(loading){
+           console.log(loading);
+       }
+       if(error){
+           console.log(error);
+       }
+       console.log(data)
+       useEffect(() => {
+            if(!loading){
+                console.log(data);
+            }
+       }, []);
         return (
             <div>
                 <Wraper title={'Collection'}/>
@@ -77,7 +52,7 @@ class ProductHome extends Component {
                                             <div className="section-t-space portfolio-section portfolio-padding metro-section port-col">
                                                 {/* {products.length > 0 ? */}
                                                     <InfiniteScroll
-                                                        dataLength={this.state.limit} //This is important field to render the next data
+                                                        dataLength={1} //This is important field to render the next data
                                                         // next={this.fetchMoreItems}
                                                         // hasMore={this.state.hasMoreItems}
                                                         loader={<div className="loading-cls"></div>}
@@ -90,10 +65,12 @@ class ProductHome extends Component {
                                                         <div className="isotopeContainer row">
                                                             {/* { products.slice(0, this.state.limit).map((product, index) => */}
                                                                 <div className="col-xl-3 col-sm-6 isotopeSelector" key={1}>
-                                                                    <ProductList product={{name:'ddd'}} symbol={symbol}
+                                                                    <ProductList product={{name:'ddd'}} 
                                                                                 //  onAddToCompareClicked={() => addToCompare(product)}
                                                                                 //  onAddToWishlistClicked={() => addToWishlist(product)}
-                                                                                 onAddToCartClicked={addToCart} key={1}/>
+                                                                                //  onAddToCartClicked={addToCart} key={1}
+                                                                                 
+                                                                                 />
                                                                 </div>)
                                                             {/* } */}
                                                         </div>
@@ -119,7 +96,6 @@ class ProductHome extends Component {
             </div>
         )
     }
-}
 // const mapStateToProps = (state) => ({
 //     products: getVisibleproducts(state.data, state.filters),
 //     symbol: state.data.symbol,
