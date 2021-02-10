@@ -147,7 +147,8 @@ EMAIL_USE_TLS = True
 AUTH_USER_MODEL = 'shop1.ExtendUser'
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000'
+    'http://localhost:3000',
+    'http://localhost:3001'
 ]
 
 GRAPHENE = {

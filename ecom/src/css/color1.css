@@ -8160,13 +8160,7 @@ footer p {
   border-left: 1px solid #dddddd;
 }
 
-.loading-cls {
-  width: 70px;
-  height: 60px;
-  background-repeat: no-repeat;
-  margin: 0 auto;
-  background-image: ("/assets/images/loader.gif");
-}
+
 
 .seen-cls {
   text-align: center;

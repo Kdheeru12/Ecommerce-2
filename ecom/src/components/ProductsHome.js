@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React,{useEffect,useState} from 'react';
 import {Link} from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import ProductList from './ProductList';
@@ -7,19 +7,50 @@ import { useQuery } from '@apollo/client';
 import { ALL_PRODUCTS } from '../Graphql/Queries';
 
 function ProductHome() {
-       const {loading,error,data } = useQuery(ALL_PRODUCTS) 
-       if(loading){
-           console.log(loading);
-       }
-       if(error){
-           console.log(error);
-       }
-       console.log(data)
-       useEffect(() => {
-            if(!loading){
-                console.log(data);
-            }
-       }, []);
+    //    const {loading,error,data } = useQuery(ALL_PRODUCTS) 
+    //    if(loading){
+    //        console.log(loading);
+    //    }
+    //    if(error){
+    //        console.log(error);
+    //    }
+    //    console.log(data)
+    //    useEffect(() => {
+    //         if(!loading){
+    //             console.log(data);
+    //         }
+    //    }, []);
+    const [delayProduct,setDelayProduct] = useState(true)
+    const [products, setproducts] = useState([]);
+    const [hasMoreitems, sethasMoreitems] = useState(true)
+    const [limit, setlimit] = useState(3);
+    var { loading, data } =  useQuery(ALL_PRODUCTS);
+    useEffect(() => {
+        if (!loading) {
+            console.log(data.allProducts);
+            setproducts(data.allProducts)
+
+        } else {
+            console.log('not')
+        }
+        
+        setTimeout(() => {
+            setDelayProduct(false)  
+        }, 5000);
+
+    }, [delayProduct])
+    const fetchMoreItems = () => {
+        if (limit >= products.length) {
+            sethasMoreitems(false)
+            return;
+        }
+        // a fake async api call
+        setTimeout(() => {
+            setlimit(limit+3)
+        }, 3000);
+
+
+    }
         return (
             <div>
                 <Wraper title={'Collection'}/>
@@ -50,29 +81,30 @@ function ProductHome() {
                                         </div>
                                         <div className="collection-product-wrapper">
                                             <div className="section-t-space portfolio-section portfolio-padding metro-section port-col">
-                                                {/* {products.length > 0 ? */}
+                                                {products.length > 0 ?
                                                     <InfiniteScroll
-                                                        dataLength={1} //This is important field to render the next data
-                                                        // next={this.fetchMoreItems}
-                                                        // hasMore={this.state.hasMoreItems}
+                                                        dataLength={limit} //This is important field to render the next data
+                                                        next={fetchMoreItems}
+                                                        hasMore={hasMoreitems}
                                                         loader={<div className="loading-cls"></div>}
                                                         endMessage={
                                                             <p className="seen-cls seen-it-cls">
                                                                 <b>Yay! You have seen it all</b>
                                                             </p>
                                                         }
+
                                                     >
                                                         <div className="isotopeContainer row">
-                                                            {/* { products.slice(0, this.state.limit).map((product, index) => */}
-                                                                <div className="col-xl-3 col-sm-6 isotopeSelector" key={1}>
-                                                                    <ProductList product={{name:'ddd'}} 
+                                                            { products.slice(0,limit).map((product) =>
+                                                                <div className="col-xl-3 col-sm-6 isotopeSelector" key={product.id}>
+                                                                    <ProductList product={product} 
                                                                                 //  onAddToCompareClicked={() => addToCompare(product)}
                                                                                 //  onAddToWishlistClicked={() => addToWishlist(product)}
-                                                                                //  onAddToCartClicked={addToCart} key={1}
+                                                                                //  onAddToCartClicked={addToCart} 
+                                                                                key={product.id}
                                                                                  
                                                                                  />
-                                                                </div>)
-                                                            {/* } */}
+                                                                </div>)}
                                                         </div>
                                                     </InfiniteScroll>
                                                     :
@@ -84,7 +116,7 @@ function ProductHome() {
                                                             <Link to={`${process.env.PUBLIC_URL}/`} className="btn btn-solid">continue shopping</Link>
                                                         </div>
                                                     </div>
-                                                {/* } */}
+                                                    }
                                             </div>
                                         </div>
                                     </div>
