@@ -1,11 +1,26 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class Wraper extends Component {
     render (){
         const {title, parent} = this.props;
         return (
             <div className="breadcrumb-section">
+                            <ToastContainer
+                    position="top-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    />
+                    {/* Same as */}
+            <ToastContainer />
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6">
