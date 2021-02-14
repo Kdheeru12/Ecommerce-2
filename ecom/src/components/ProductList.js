@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import Modal from 'react-responsive-modal';
+import 'react-responsive-modal/styles.css';
+import { Modal } from 'react-responsive-modal';
 
 
 class ProductList extends Component {
@@ -65,7 +66,7 @@ class ProductList extends Component {
                                     // src={product.variants?
                                     //     this.state.image?this.state.image:product.variants[0].images
                                     //     :product.pictures[0]}
-                                    src={'https://picsum.photos/200'}
+                                    src={`http://127.0.0.1:8000/media/${product.image}`}
                                     className="img-fluid"
                                     alt="" /></Link>
                             </div>
@@ -83,7 +84,7 @@ class ProductList extends Component {
                                 <Link to={`${process.env.PUBLIC_URL}/compare`} title="Compare" onClick={onAddToCompareClicked}>
                                     <i className="fa fa-refresh" aria-hidden="true"></i></Link>
                             </div>
-                            {product.variants?
+                            {/* {product.variants?
                             <ul className="product-thumb-list">
                                 {product.variants.map((vari, i) =>
                                     <li className={`grid_thumb_img ${(vari.images === this.state.image)?'active':''}`} key={i}>
@@ -92,7 +93,7 @@ class ProductList extends Component {
                                         </a>
                                     </li>)
                                 }
-                            </ul>:''}
+                            </ul>:''} */}
 
                         </div>
                         <div className="product-detail">
@@ -103,15 +104,15 @@ class ProductList extends Component {
                                 <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${product.id}`}>
                                     <h6>{product.name}</h6>
                                 </Link>
-                                <h4>{symbol}{product.price-(product.price*product.discount/100)}
+                                <h4>{symbol}{product.price}
                                     <del><span className="money">{symbol}{product.price}</span></del></h4>
-                                {product.variants?
+                                {/* {product.variants?
                                 <ul className="color-variant">
                                     {product.variants.map((vari, i) => {
                                         return (
                                             <li className={vari.color} key={i} title={vari.color} onClick={() => this.onClickHandle(vari.images)}></li>)
                                     })}
-                                </ul>:''}
+                                </ul>:''} */}
                             </div>
                         </div>
                     <Modal open={open} onClose={this.onCloseModal} center>
@@ -121,13 +122,13 @@ class ProductList extends Component {
                                         <div className="row">
                                             <div className="col-lg-6  col-xs-12">
                                                 <div className="quick-view-img">
-                                                    <img src={'https://picsum.photos/200'} alt="" className="img-fluid" />
+                                                    <img src={`http://127.0.0.1:8000/media/${product.image}`} alt="" className="img-fluid" />
                                                 </div>
                                             </div>
                                             <div className="col-lg-6 rtl-text">
                                                 <div className="product-right">
                                                     <h2> {product.name} </h2>
-                                                    <h3>{symbol}{product.price-(product.price*product.discount/100)}
+                                                    <h3>{symbol}{product.price}
                                                         <del><span className="money">{symbol}{product.price}</span></del>
                                                     </h3>
                                                     {product.variants?
