@@ -1,16 +1,17 @@
-import React, {useState} from 'react';
+import React, {useState,useContext} from 'react';
 import {Link} from 'react-router-dom';
 import 'react-responsive-modal/styles.css';
 import { Modal } from 'react-responsive-modal';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CartContext from '../helpers/cart';
 
 function ProductList({product}) {
     const [open, setOpen] = useState(false);
     const [quantity, setqunatity] = useState(1);
     const onOpenModal = () => setOpen(true);
     const onCloseModal = () => setOpen(false);
-    
+    const {addToCart } = useContext(CartContext)
     const minusQty = () => {
         if(quantity > 1) {
             setqunatity((pre) => pre-1)
@@ -30,6 +31,7 @@ function ProductList({product}) {
                 progress: undefined,
                 });
             console.log('ddd');
+            addToCart(4,'add')
         }
     }
 

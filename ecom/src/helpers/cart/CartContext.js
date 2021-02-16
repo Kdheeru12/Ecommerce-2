@@ -35,9 +35,11 @@ import { ALL_CART } from '../../Graphql/Queries';
 const CartProvider = (props) => {
   const [delayProduct,setDelayProduct] = useState(true)
   const [cartItems, setCartItems] = useState([])
+  const [ayerror,setayerror] = useState(null)
   const [cartTotal, setCartTotal] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [stock, setStock] = useState('InStock');
+  const [updateCart] = useMutation(UPDATE_ORDER);
   console.log(cartItems)
   var { loading, data,error } =  useQuery(ALL_CART);
   // useEffect(() => {
@@ -55,7 +57,29 @@ const CartProvider = (props) => {
   if(loading){
     console.log('loading');
   }
-  useEffect(() => {
+
+
+  // Add Product To Cart
+  const addToCart = async (item ,action) => {
+    // toast.success("Product Added Successfully !");
+
+    // const index = cartItems.findIndex(itm => itm.id === item.id)
+    // if (index !== -1) {
+    //   const product = cartItems[index];
+    //   cartItems[index] = { ...item, ...item, qty: quantity, total:(item.price - (item.price * item.discount / 100)) * quantity };
+    //   setCartItems([...cartItems])
+    // } else {
+    //   const product = { ...item, qty: quantity, total: (item.price - (item.price * item.discount / 100)) }
+    //   setCartItems([...cartItems, product])
+    // }            
+      const res =  await updateCart({
+          variables:{id:item,action:action}
+      }).catch(err =>setayerror(err))
+      console.log(res);
+      console.log(ayerror)
+
+  }
+useEffect(() => {
     if (!loading) {
       console.log(data)
       setCartItems(data.allCartitems)
@@ -66,21 +90,7 @@ const CartProvider = (props) => {
         setDelayProduct(false)  
     }, 5000);
 
-}, [delayProduct])
-
-//   // Add Product To Cart
-//   const addToCart = (item ,quantity) => {
-//     toast.success("Product Added Successfully !");
-//     const index = cartItems.findIndex(itm => itm.id === item.id)
-//     if (index !== -1) {
-//       const product = cartItems[index];
-//       cartItems[index] = { ...item, ...item, qty: quantity, total:(item.price - (item.price * item.discount / 100)) * quantity };
-//       setCartItems([...cartItems])
-//     } else {
-//       const product = { ...item, qty: quantity, total: (item.price - (item.price * item.discount / 100)) }
-//       setCartItems([...cartItems, product])
-//     }
-//   }
+}, [delayProduct,])
 
 //   const removeFromCart = (item) => {
 //     toast.error("Product Removed Successfully !");
@@ -128,7 +138,7 @@ const CartProvider = (props) => {
       value={{
         // ...props,
         // state: cartItems, cartTotal,setQuantity ,quantity,stock,
-        // addToCart: addToCart,
+        addToCart: addToCart,
         // removeFromCart: removeFromCart,
         // plusQty: plusQty,
         // minusQty:minusQty,
