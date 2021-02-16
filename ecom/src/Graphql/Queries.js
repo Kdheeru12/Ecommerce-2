@@ -26,3 +26,15 @@ query{
   }
   }
 `
+export const ALL_CART = gql`
+query{
+  allCartitems{
+    id
+    quantity
+    price
+    totalPrice
+  }
+    
+}
+`
+

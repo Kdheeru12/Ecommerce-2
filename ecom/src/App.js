@@ -7,6 +7,7 @@ import Layout from './covers/Layout';
 import Signup from './Users/Signup';
 import test from './test';
 import ProductHome from './components/ProductsHome';
+import CartProvider from './helpers/cart/CartContext';
 
 function App() {
   return (
@@ -16,7 +17,9 @@ function App() {
           <Route exact path='/' component={test}/>
           <Route path='/signup' component={Signup} />
           <Route path='/login' component={Login} />
+          <CartProvider>
           <Route path='/products' component={ProductHome}/>
+          </CartProvider>
         </Switch>
         </Layout>
       </Router>

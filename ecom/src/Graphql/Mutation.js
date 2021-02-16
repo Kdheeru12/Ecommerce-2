@@ -42,3 +42,11 @@ mutation REFRESH($token:String!){
   }
 }
 `;
+
+export const UPDATE_ORDER = gql`
+mutation updateOrder($id:ID!,$action:String!){
+  updateOrder(id:$id,action:$action){
+    items
+  }
+}
+`
