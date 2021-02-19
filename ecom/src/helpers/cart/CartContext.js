@@ -109,6 +109,10 @@ useEffect(() => {
 
 }, [delayProduct,addToCart])
 console.log(cartItems);
+const a = cartItems.map((items) =>items.totalPrice)
+console.log(
+  a.reduce((a, b) => a + b, 0)
+);
 //   const removeFromCart = (item) => {
 //     toast.error("Product Removed Successfully !");
 //     setCartItems(cartItems.filter((e) => (e.id !== item.id)))
