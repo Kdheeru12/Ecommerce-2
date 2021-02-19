@@ -22,6 +22,9 @@ export default function Cart() {
             addToCart(id,'remove')
         }
     }
+    const deleteQty =(id) =>{
+        addToCart(id,'delete')
+    }
     return (
         <div>
             {/*SEO Support*/}
@@ -33,7 +36,7 @@ export default function Cart() {
 
             <Wraper title={'Cart Page'}/>
 
-            {(cartItems) ?
+            {(cartItems.length > 0) ?
             <section className="cart-section section-b-space">
                 <div className="container">
                     <div className="row">
@@ -96,10 +99,11 @@ export default function Cart() {
                                                     </div>
                                                     <div className="col-xs-3">
                                                         <h2 className="td-color">
-                                                            <a href="#" className="icon" //onClick={() => this.props.removeFromCart(item)}
+                                                            <button type="button" className="icon" //onClick={() => this.props.removeFromCart(item)}
+                                                            onClick={() =>deleteQty(items.product.id)}
                                                             >
                                                                 <i className="icon-close"></i>
-                                                            </a>
+                                                            </button>
                                                         </h2>
                                                     </div>
                                                 </div>
@@ -130,10 +134,11 @@ export default function Cart() {
                                                 {/* {(item.qty >= item.stock)? 'out of Stock' : ''} */}
                                             </td>
                                             <td>
-                                                <a href="#" className="icon" //onClick={() => this.props.removeFromCart(item)}
+                                                <button  className="icon" //onClick={() => this.props.removeFromCart(item)}
+                                                onClick={() =>deleteQty(items.product.id)}
                                                 >
                                                     <i className="fa fa-times"></i>
-                                                </a>
+                                                </button>
                                             </td>
                                             <td><h2 className="td-color">{items.totalPrice}</h2></td>
                                         </tr>
