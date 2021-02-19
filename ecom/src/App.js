@@ -8,6 +8,7 @@ import Signup from './Users/Signup';
 import test from './test';
 import ProductHome from './components/ProductsHome';
 import CartProvider from './helpers/cart/CartContext';
+import Cart from './components/Cart';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path='/login' component={Login} />
           <CartProvider>
           <Route path='/products' component={ProductHome}/>
+          <Route path='/cart' component={Cart} />
           </CartProvider>
         </Switch>
         </Layout>

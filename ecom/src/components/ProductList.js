@@ -11,27 +11,13 @@ function ProductList({product}) {
     const [quantity, setqunatity] = useState(1);
     const onOpenModal = () => setOpen(true);
     const onCloseModal = () => setOpen(false);
-    const {addToCart } = useContext(CartContext)
-    const minusQty = () => {
-        if(quantity > 1) {
-            setqunatity((pre) => pre-1)
-        }
-    }
-
-    const plusQty = () => {
+    const {addToCart, } = useContext(CartContext)
+    
+    const plusQty = (id) => {
+        console.log(id);
         if(true) {
-            setqunatity((pre) =>pre +1)
-            toast.success("Product Added Successfully !",{
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                });
             console.log('ddd');
-            addToCart(4,'add')
+            addToCart(id,'add')
         }
     }
 
@@ -51,8 +37,8 @@ function ProductList({product}) {
                         alt="" /></Link>
                     </div>
                 <div className="cart-info cart-wrap">
-                    <button title="Add to cart" 
-                    //onClick={() => onAddToCartClicked(product, 1)}
+                    <button  title="Add to cart" 
+                    onClick={() =>plusQty(product.id)}
                     >
                         <i className="fa fa-shopping-cart" aria-hidden="true"></i>
                     </button>
@@ -139,7 +125,7 @@ function ProductList({product}) {
                                                 </ul>
                                             </div>:''}
                                             <h6 className="product-title">quantity</h6>
-                                            <div className="qty-box">
+                                            {/* <div className="qty-box">
                                                 <div className="input-group">
                                                     <span className="input-group-prepend">
                                                     <button type="button" className="btn quantity-left-minus" onClick={minusQty} data-type="minus" data-field="">
@@ -153,7 +139,7 @@ function ProductList({product}) {
                                                     </button>
                                                     </span>
                                                 </div>
-                                            </div>
+                                            </div> */}
                                         </div>
                                         <div className="product-buttons">
                                             <button  className="btn btn-solid"  >add to cart</button>

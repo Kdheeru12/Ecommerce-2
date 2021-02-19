@@ -68,6 +68,8 @@ class AddMutation(graphene.Mutation):
             orderItem.quantity = (orderItem.quantity + 1)
         elif action == 'remove':
             orderItem.quantity = (orderItem.quantity - 1)
+        elif action = 'delete':
+            orderItem.delete()
         orderItem.price=float(product.price)
         orderItem.total_price=float(orderItem.quantity*product.price)
         orderItem.save()

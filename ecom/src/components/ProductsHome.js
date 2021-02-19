@@ -23,7 +23,7 @@ function ProductHome() {
     const [delayProduct,setDelayProduct] = useState(true)
     const [products, setproducts] = useState([]);
     const [hasMoreitems, sethasMoreitems] = useState(true)
-    const [limit, setlimit] = useState(3);
+    const [limit, setlimit] = useState(20);
     var { loading, data } =  useQuery(ALL_PRODUCTS);
     useEffect(() => {
         if (!loading) {

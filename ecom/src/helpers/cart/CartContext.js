@@ -40,8 +40,8 @@ const CartProvider = (props) => {
   const [quantity, setQuantity] = useState(1);
   const [stock, setStock] = useState('InStock');
   const [updateCart] = useMutation(UPDATE_ORDER);
-  console.log(cartItems)
-  var { loading, data,error } =  useQuery(ALL_CART);
+  // console.log(cartItems)
+  const { loading, data,error,refetch } =  useQuery(ALL_CART);
   // useEffect(() => {
     
   //   // const Total = cartItems.reduce((a, b) => +a + +b.total, 0)
@@ -51,12 +51,7 @@ const CartProvider = (props) => {
 
     
   // }, [])
-  if(error){
-    console.log('de');
-  }
-  if(loading){
-    console.log('loading');
-  }
+
 
 
   // Add Product To Cart
@@ -75,13 +70,35 @@ const CartProvider = (props) => {
       const res =  await updateCart({
           variables:{id:item,action:action}
       }).catch(err =>setayerror(err))
-      console.log(res);
+      // console.log('fff');
+      // console.log(res);
+      if (res){
+        console.log(data.allCartitems);
+        toast.success(`Product ${action}ed Successfully !`,{
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          Transition:"Slide",
+          Delay:'5000'
+          });
+        refetch()
+      }
       console.log(ayerror)
 
   }
 useEffect(() => {
-    if (!loading) {
-      console.log(data)
+  if(error){
+    console.log('de');
+  }
+  if(loading){
+    console.log('loading');
+  }
+  if (!loading) {
+      // console.log(data)
       setCartItems(data.allCartitems)
     } else {
         console.log('not')
@@ -90,8 +107,8 @@ useEffect(() => {
         setDelayProduct(false)  
     }, 5000);
 
-}, [delayProduct,])
-
+}, [delayProduct,addToCart])
+console.log(cartItems);
 //   const removeFromCart = (item) => {
 //     toast.error("Product Removed Successfully !");
 //     setCartItems(cartItems.filter((e) => (e.id !== item.id)))
@@ -139,6 +156,7 @@ useEffect(() => {
         // ...props,
         // state: cartItems, cartTotal,setQuantity ,quantity,stock,
         addToCart: addToCart,
+        cartItems:cartItems
         // removeFromCart: removeFromCart,
         // plusQty: plusQty,
         // minusQty:minusQty,

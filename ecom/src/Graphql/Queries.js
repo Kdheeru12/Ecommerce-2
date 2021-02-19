@@ -30,6 +30,11 @@ export const ALL_CART = gql`
 query{
   allCartitems{
     id
+    product {
+      id
+      name
+      image
+    }
     quantity
     price
     totalPrice
