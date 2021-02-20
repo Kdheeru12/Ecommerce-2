@@ -86,6 +86,7 @@ const CartProvider = (props) => {
           Delay:'5000'
           });
         refetch()
+        setayerror(null)
       }
       console.log(ayerror)
 
@@ -109,10 +110,15 @@ useEffect(() => {
 
 }, [delayProduct,addToCart])
 console.log(cartItems);
-const a = cartItems.map((items) =>items.totalPrice)
-console.log(
-  a.reduce((a, b) => a + b, 0)
-);
+if(cartItems){
+  var a = cartItems.map((items) =>Number(items.totalPrice))
+  console.log(a);
+  
+  a= a.reduce((a, b) => a + b, 0)
+  var b = cartItems.map((item) => item.quantity)
+  b = b.reduce((a,b)=>a+b,0) 
+}
+
 //   const removeFromCart = (item) => {
 //     toast.error("Product Removed Successfully !");
 //     setCartItems(cartItems.filter((e) => (e.id !== item.id)))
@@ -160,7 +166,9 @@ console.log(
         // ...props,
         // state: cartItems, cartTotal,setQuantity ,quantity,stock,
         addToCart: addToCart,
-        cartItems:cartItems
+        cartItems:cartItems,
+        cartTotal:a,
+        TotalItems:b
         // removeFromCart: removeFromCart,
         // plusQty: plusQty,
         // minusQty:minusQty,

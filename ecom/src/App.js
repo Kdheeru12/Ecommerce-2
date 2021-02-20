@@ -13,17 +13,19 @@ import Cart from './components/Cart';
 function App() {
   return (
       <Router>
+        <CartProvider>
         <Layout>
         <Switch>
           <Route exact path='/' component={test}/>
           <Route path='/signup' component={Signup} />
           <Route path='/login' component={Login} />
-          <CartProvider>
+          
           <Route path='/products' component={ProductHome}/>
           <Route path='/cart' component={Cart} />
-          </CartProvider>
+          
         </Switch>
         </Layout>
+        </CartProvider>
       </Router>
   );
 }

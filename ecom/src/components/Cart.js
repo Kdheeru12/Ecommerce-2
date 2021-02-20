@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function Cart() {
 
-    const {addToCart,cartItems } = useContext(CartContext)
+    const {addToCart,cartItems,cartTotal } = useContext(CartContext)
     console.log(cartItems);
     const plusQty = (id) => {
         console.log(id);
@@ -36,7 +36,7 @@ export default function Cart() {
 
             <Wraper title={'Cart Page'}/>
 
-            {(cartItems.length > 0) ?
+            {(cartItems) ?
             <section className="cart-section section-b-space">
                 <div className="container">
                     <div className="row">
@@ -149,7 +149,7 @@ export default function Cart() {
                                 <tfoot>
                                 <tr>
                                     <td>total price :</td>
-                                    <td><h2>104 </h2></td>
+                                    <td><h2>{cartTotal} </h2></td>
                                 </tr>
                                 </tfoot>
                             </table>

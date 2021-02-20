@@ -1,23 +1,33 @@
-import React, {Component} from 'react';
+import React, {useContext} from 'react';
 import {Link} from 'react-router-dom';
-import CartHeader from './CartPage';
+import CartPage from './CartPage';
 import CartImg from '../Images/cart.png'
-const CartContainer = () => (
-     <li  className="onhover-div mobile-cart"><div className="cart-qty-cls">{1}</div>
+import CartContext from '../helpers/cart';
+
+const CartContainer = () => {
+    const {addToCart,cartItems,cartTotal,TotalItems } = useContext(CartContext)
+    const deleteQty =(id) =>{
+        addToCart(id,'delete')
+        console.log('ddee');
+    }
+
+
+    return(
+     <li  className="onhover-div mobile-cart"><div className="cart-qty-cls">{TotalItems}</div>
         <Link to={`${process.env.PUBLIC_URL}/cart`}><img src={CartImg} className="img-fluid" alt=""/>
             <i className="fa fa-shopping-cart"></i></Link>
         <ul className="show-div shopping-cart">
-            {/* { cartList.map((item,index) => ( */}
-                {/* <CartPage key={index} item={item} total={total} symbol={symbol} removeFromCart={() => removeFromCart(item)}  /> */}
-                <CartHeader />
-            {/* ))} */}
-            {(true) ?
+
+            { cartItems && cartItems.map((item) => (
+                <CartPage key={item.id} item={item}   deleteQty={() => deleteQty(item.product.id)} />
+            ))}
+            {(cartItems) ?
             //(cartList.length > 0) ?
 
             <div>
             <li>
                 <div className="total">
-                    <h5>subtotal : <span>10</span></h5>
+                    <h5>subtotal : <span>{cartTotal}</span></h5>
                 </div>
             </li>
             <li>
@@ -31,7 +41,8 @@ const CartContainer = () => (
         </ul>
 
     </li>
-)
+    )
+}
 
 
 
