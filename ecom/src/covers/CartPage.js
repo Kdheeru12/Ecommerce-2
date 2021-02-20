@@ -9,7 +9,7 @@ const CartHeader  = ({item,deleteQty}) => {
                 <div className="media">
                     <Link to={`${process.env.PUBLIC_URL}/product/${1}`}><img alt="" className="mr-3" src={`http://127.0.0.1:8000/media/${item.product.image}`} /></Link>
                     <div className="media-body">
-                        <Link to={`${process.env.PUBLIC_URL}/product/${item.id}`}><h4>{item.name}</h4></Link>
+                        <Link to={`${process.env.PUBLIC_URL}/product/${item.id}`}><h4>{item.product.name}</h4></Link>
                         <h4><span>{item.quantity} x  {item.price}</span></h4>
                     </div>
                 </div>

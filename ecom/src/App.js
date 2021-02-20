@@ -22,6 +22,7 @@ function App() {
           
           <Route path='/products' component={ProductHome}/>
           <Route path='/cart' component={Cart} />
+          <Route path='/checkout' component={Checkout} />
           
         </Switch>
         </Layout>

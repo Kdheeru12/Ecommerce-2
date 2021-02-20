@@ -99,11 +99,11 @@ export default function Cart() {
                                                     </div>
                                                     <div className="col-xs-3">
                                                         <h2 className="td-color">
-                                                            <button type="button" className="icon" //onClick={() => this.props.removeFromCart(item)}
+                                                            <a href={null} type="button" className="icon" //onClick={() => this.props.removeFromCart(item)}
                                                             onClick={() =>deleteQty(items.product.id)}
                                                             >
                                                                 <i className="icon-close"></i>
-                                                            </button>
+                                                            </a>
                                                         </h2>
                                                     </div>
                                                 </div>
@@ -134,11 +134,11 @@ export default function Cart() {
                                                 {/* {(item.qty >= item.stock)? 'out of Stock' : ''} */}
                                             </td>
                                             <td>
-                                                <button  className="icon" //onClick={() => this.props.removeFromCart(item)}
+                                                <a href={null} type="button" className="icon" //onClick={() => this.props.removeFromCart(item)}
                                                 onClick={() =>deleteQty(items.product.id)}
                                                 >
                                                     <i className="fa fa-times"></i>
-                                                </button>
+                                                </a>
                                             </td>
                                             <td><h2 className="td-color">{items.totalPrice}</h2></td>
                                         </tr>

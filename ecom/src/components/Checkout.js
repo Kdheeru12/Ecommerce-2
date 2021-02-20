@@ -1,14 +1,16 @@
-import React,{useState} from 'react'
+import React,{useState,useContext} from 'react'
 import {Helmet} from 'react-helmet'
 import { useForm } from 'react-hook-form';
 import Wraper from './Wraper';
+import CartContext from '../helpers/cart';
 
 export default function Checkout() {
     // initialize the hook
     const [obj, setObj] = useState({});
     const { register, handleSubmit, errors } = useForm(); 
-
-    const onSubmit = data => {
+    const {cartItems,cartTotal } = useContext(CartContext)
+    
+    const onSubmit = (data) => {
 
         if (data !== '') {
             alert('You submitted the form and stuff!');
@@ -23,6 +25,7 @@ export default function Checkout() {
         setObj(obj)
         console.log(obj);
     }
+    
     return (
         <div>
 
@@ -109,12 +112,12 @@ export default function Checkout() {
                                                 <div>Product <span> Total</span></div>
                                             </div>
                                             <ul className="qty">
-                                                {/* {cartItems.map((item, index) => { */}
-                                                   <li key={'index'}>{'item.name'} × {'item.qty'} <span>{'symbol'} {'item.sum'}</span></li> })
-                                                {/* } */}
+                                                {cartItems.map((item) => 
+                                                   <li key={item.id}>{item.product.name} × {item.quantity} <span> {item.totalPrice}</span></li> )
+                                                }
                                             </ul>
                                             <ul className="sub-total">
-                                                <li>Subtotal <span className="count">{'symbol'}{'total'}</span></li>
+                                                <li>Subtotal <span className="count">{cartTotal}</span></li>
                                                 <li>Shipping <div className="shipping">
                                                     <div className="shopping-option">
                                                         <input type="checkbox" name="free-shipping" id="free-shipping" />
@@ -129,7 +132,7 @@ export default function Checkout() {
                                             </ul>
 
                                             <ul className="total">
-                                                <li>Total <span className="count">{'symbol'}{'total'}</span></li>
+                                                <li>Total <span className="count">{cartTotal}</span></li>
                                             </ul>
                                         </div>
 
