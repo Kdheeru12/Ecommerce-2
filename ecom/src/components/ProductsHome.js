@@ -4,31 +4,21 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import ProductList from './ProductList';
 import Wraper from './Wraper';
 import { useQuery } from '@apollo/client';
-import { ALL_PRODUCTS } from '../Graphql/Queries';
+import { ALL_PRODUCTS,ALL_SEARCH_PRODUCTS, SEARCH_PRODUCTS } from '../Graphql/Queries';
 
 function ProductHome() {
-    //    const {loading,error,data } = useQuery(ALL_PRODUCTS) 
-    //    if(loading){
-    //        console.log(loading);
-    //    }
-    //    if(error){
-    //        console.log(error);
-    //    }
-    //    console.log(data)
-    //    useEffect(() => {
-    //         if(!loading){
-    //             console.log(data);
-    //         }
-    //    }, []);
     const [delayProduct,setDelayProduct] = useState(true)
     const [products, setproducts] = useState([]);
     const [hasMoreitems, sethasMoreitems] = useState(true)
     const [limit, setlimit] = useState(20);
-    var { loading, data } =  useQuery(ALL_PRODUCTS);
+    const [name, setname] = useState("");
+    var { loading, data } =  useQuery(SEARCH_PRODUCTS,{variables:{name}},);
     useEffect(() => {
         if (!loading) {
             console.log(data.allProducts);
-            setproducts(data.allProducts)
+            const pro = data.searchProducts.edges.map((it) =>it.node)
+            console.log(pro);
+            setproducts(pro)
 
         } else {
             console.log('not')
@@ -51,6 +41,7 @@ function ProductHome() {
 
 
     }
+    console.log(products);
         return (
             <div>
                 <Wraper title={'Collection'}/>

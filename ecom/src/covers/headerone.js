@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState,useEffect,useContext } from 'react';
 
 import Pace from 'react-pace-progress'
 import { Link } from 'react-router-dom';
@@ -11,34 +11,10 @@ import Search from '../Images/search.png'
 import Settings from '../Images/setting.png'
 
 
-class HeaderOne extends Component {
-
-    constructor(props) {
-        super(props);
-
-		this.state = {
-			isLoading:false
-		}
-    }
-    /*=====================
-         Pre loader
-         ==========================*/
-    componentDidMount() {
-        setTimeout(function() {
-            document.querySelector(".loader-wrapper").style = "display: none";
-        }, 2000);
-
-        this.setState({ open: true });
-    }
-
-    componentWillMount(){
-        window.addEventListener('scroll', this.handleScroll);
-	}
-    componentWillUnmount() {
-        window.removeEventListener('scroll', this.handleScroll);
-    }
-
-    handleScroll = () => {
+export default function HeaderOne() {
+	const [loading, setloading] = useState(false);
+	const [open, setopen] = useState();
+	const handleScroll = () => {
         let number = window.pageXOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
         if (number >= 300) {
             if (window.innerWidth < 576) {
@@ -49,37 +25,41 @@ class HeaderOne extends Component {
             document.getElementById("sticky").classList.remove('fixed');
         }
     }
+	useEffect(() => {
+		setTimeout(function() {
+            document.querySelector(".loader-wrapper").style = "display: none";
+        }, 2000);
 
-    
-
-    openNav() {
-        var openmyslide = document.getElementById("mySidenav");
+        setopen(true);
+		window.addEventListener('scroll', handleScroll);
+		window.removeEventListener('scroll', handleScroll);
+	}, []);
+	const openNav = () =>{
+		var openmyslide = document.getElementById("mySidenav");
         if(openmyslide){
             openmyslide.classList.add('open-side')
 		}
-    }
-    openSearch() {
-        document.getElementById("search-overlay").style.display = "block";
-    }
-
-    closeSearch() {
-        document.getElementById("search-overlay").style.display = "none";
-    }
-
-	load = ()=>{
-		this.setState({isLoading: true});
+	}
+	const openSearch = () =>{
+		document.getElementById("search-overlay").style.display = "block";
+		
+	}
+	const closeSearch = () =>{
+		document.getElementById("search-overlay").style.display = "none";
+	}
+	const 	load = ()=>{
+		setloading(true);
 		fetch().then(()=>{
 			// deal with data fetched
-			this.setState({isLoading: false})
+			setloading(true);
 		})
 	};
-	
-	render() {
+
 
 		return (
 			<div>
 				<header id="sticky" className="sticky">
-					{this.state.isLoading ? <Pace color="#27ae60"/> : null}
+					{loading ? <Pace color="#27ae60"/> : null}
 					<div className="mobile-fix-option"></div>
 					{/*Top Header Component*/}
 					<TopBar/>
@@ -90,7 +70,7 @@ class HeaderOne extends Component {
 								<div className="main-menu">
 									<div className="menu-left">
 										<div className="navbar">
-											<a href="javascript:void(0)" onClick={this.openNav}>
+											<a href="javascript:void(0)" onClick={openNav}>
 												<div className="bar-style"> <i className="fa fa-bars sidebar-bar" aria-hidden="true"></i></div>
 											</a>
 											{/*SideBar Navigation Component*/}
@@ -110,8 +90,8 @@ class HeaderOne extends Component {
 											<div className="icon-nav">
 												<ul>
 													<li className="onhover-div mobile-search">
-														<div><img src={Search} onClick={this.openSearch} className="img-fluid" alt="" />
-															<i className="fa fa-search" onClick={this.openSearch}></i></div>
+														<div><img src={Search} onClick={openSearch} className="img-fluid" alt="" />
+															<i className="fa fa-search" onClick={openSearch}></i></div>
 													</li>
 													<li className="onhover-div mobile-setting">
 														<div><img src={Settings} className="img-fluid" alt="" />
@@ -145,7 +125,7 @@ class HeaderOne extends Component {
 
                 <div id="search-overlay" className="search-overlay">
                     <div>
-                        <span className="closebtn" onClick={this.closeSearch} title="Close Overlay">×</span>
+                        <span className="closebtn" onClick={closeSearch} title="Close Overlay">×</span>
                         <div className="overlay-content">
                             <div className="container">
                                 <div className="row">
@@ -165,7 +145,5 @@ class HeaderOne extends Component {
 
 			</div>
 			)
-	}
-}
 
-export default HeaderOne;
+}

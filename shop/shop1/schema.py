@@ -1,11 +1,16 @@
 from django.db import models
-import graphene
+import graphene 
+from graphene import Node,relay, Connection, ConnectionField
 from graphql_auth import mutations
 from graphql_auth.schema import UserQuery,MeQuery
 from graphene_django import DjangoObjectType, fields
 from .models import ExtendUser
 from .models import *
-from .utils import cookieCart,cartData,guestOrder
+from graphene_django.filter import DjangoFilterConnectionField
+
+# from .utils import cookieCart,cartData,guestOrder
+import django_filters
+
 
 class Users(DjangoObjectType):
     class Meta:
@@ -16,6 +21,12 @@ class Products(DjangoObjectType):
     class Meta:
         model= Product
         fields: ('__all__')
+        filter_fields = {
+            'name':['exact', 'icontains', 'istartswith'],
+        }
+        interfaces = (relay.Node, )
+        
+
 class OrderItems(DjangoObjectType):
     class Meta:
         model = OrderItem
@@ -34,6 +45,7 @@ class Query(UserQuery,MeQuery,graphene.ObjectType):
     all_users = graphene.List(Users)
     all_products = graphene.List(Products)
     all_cartItems = graphene.List(OrderItems)
+    search_products =  DjangoFilterConnectionField(Products)
     def resolve_all_users(root,info):
         return ExtendUser.objects.all()
     def resolve_all_products(root,info):
