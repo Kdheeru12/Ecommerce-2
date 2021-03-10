@@ -1,19 +1,20 @@
-import React, { useState,useEffect,useContext } from 'react';
+import React, { useState,useEffect,useContext, } from 'react';
 
 import Pace from 'react-pace-progress'
-import { Link } from 'react-router-dom';
-
+import { Link, useHistory } from 'react-router-dom';
 // Import custom components
 import CartContainer from './CartContainer';
 import SideBar from './Sidenavbar';
 import TopBar from './Topbar';
 import Search from '../Images/search.png'
 import Settings from '../Images/setting.png'
+import CartContext from '../helpers/cart';
 
 
 export default function HeaderOne() {
 	const [loading, setloading] = useState(false);
 	const [open, setopen] = useState();
+	const {search,setsearch } = useContext(CartContext)
 	const handleScroll = () => {
         let number = window.pageXOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
         if (number >= 300) {
@@ -54,6 +55,12 @@ export default function HeaderOne() {
 			setloading(true);
 		})
 	};
+	const history = useHistory()
+	const Submit = (e) =>{
+		e.preventDefault()
+		history.push('/products')
+		window.location.reload()
+	}
 
 
 		return (
@@ -130,9 +137,9 @@ export default function HeaderOne() {
                             <div className="container">
                                 <div className="row">
                                     <div className="col-xl-12">
-                                        <form>
+                                        <form onSubmit={Submit}>
                                             <div className="form-group">
-                                                <input type="text" className="form-control" id="exampleInputPassword1" placeholder="Search a Product" />
+                                                <input type="text" value={search} onChange={(e) => setsearch(e.target.value)} className="form-control" id="exampleInputPassword1" placeholder="Search a Product" />
                                             </div>
                                             <button type="submit" className="btn btn-primary"><i className="fa fa-search"></i></button>
                                         </form>

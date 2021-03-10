@@ -12,13 +12,14 @@ function ProductHome() {
     const [hasMoreitems, sethasMoreitems] = useState(true)
     const [limit, setlimit] = useState(20);
     const [name, setname] = useState("");
-    var { loading, data } =  useQuery(SEARCH_PRODUCTS,{variables:{name}},);
+    // var { loading, data } =  useQuery(SEARCH_PRODUCTS,{variables:{name}},);
+    var { loading ,data} = useQuery(ALL_PRODUCTS)
     useEffect(() => {
         if (!loading) {
-            console.log(data.allProducts);
-            const pro = data.searchProducts.edges.map((it) =>it.node)
-            console.log(pro);
-            setproducts(pro)
+            // console.log(data.allProducts);
+            // const pro = data.searchProducts.edges.map((it) =>it.node)
+            // console.log(pro);
+            setproducts(data.allProducts)
 
         } else {
             console.log('not')

@@ -21,10 +21,7 @@ class Products(DjangoObjectType):
     class Meta:
         model= Product
         fields: ('__all__')
-        filter_fields = {
-            'name':['exact', 'icontains', 'istartswith'],
-        }
-        interfaces = (relay.Node, )
+        filter_fields = ['name',]
         
 
 class OrderItems(DjangoObjectType):
@@ -45,7 +42,6 @@ class Query(UserQuery,MeQuery,graphene.ObjectType):
     all_users = graphene.List(Users)
     all_products = graphene.List(Products)
     all_cartItems = graphene.List(OrderItems)
-    search_products =  DjangoFilterConnectionField(Products)
     def resolve_all_users(root,info):
         return ExtendUser.objects.all()
     def resolve_all_products(root,info):

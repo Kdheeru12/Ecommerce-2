@@ -68,7 +68,6 @@ useEffect(() => {
     }, 5000);
 
 }, [delayProduct,addToCart])
-console.log(cartItems);
 if(cartItems){
   var a = cartItems.map((items) =>Number(items.totalPrice))
   console.log(a);
@@ -80,7 +79,7 @@ if(cartItems){
   
 }
 
-
+console.log(search);
   return (
     <Context.Provider
       value={{

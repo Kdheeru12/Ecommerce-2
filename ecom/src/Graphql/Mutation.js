@@ -11,8 +11,11 @@ mutation ADD($email:String!,$username:String!,$password:String!){
       success
       errors
     }
+
+
   }
   `;
+
 export const LOGIN_USER = gql`
 mutation TOKEN($username:String!,$password:String!){
     tokenAuth(username:$username,password:$password){
@@ -50,3 +53,14 @@ mutation updateOrder($id:ID!,$action:String!){
   }
 }
 `
+
+// export const LOGIN_USER = gql`
+// mutation TOKEN($username:String!,$password:String!){
+//     tokenAuth(username:$username,password:$password){
+//       success
+//       errors
+//       token
+//       refreshToken
+      
+//     }
+//   }`;
