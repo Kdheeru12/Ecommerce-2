@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export const ADD_USER = gql`
+export const ADD_USER = gql `
 mutation ADD($email:String!,$username:String!,$password:String!){
     register(
       email:$email
@@ -16,7 +16,7 @@ mutation ADD($email:String!,$username:String!,$password:String!){
   }
   `;
 
-export const LOGIN_USER = gql`
+export const LOGIN_USER = gql `
 mutation TOKEN($username:String!,$password:String!){
     tokenAuth(username:$username,password:$password){
       success
@@ -27,7 +27,7 @@ mutation TOKEN($username:String!,$password:String!){
     }
   }`;
 
-export const VERIFY_TOKEN = gql`
+export const VERIFY_TOKEN = gql `
 mutation TOKEN($token:String!){
   verifyToken(token:$token){
 		success
@@ -35,7 +35,7 @@ mutation TOKEN($token:String!){
   }
 }
 `;
-export const REFRESH_TOKEN = gql`
+export const REFRESH_TOKEN = gql `
 mutation REFRESH($token:String!){
   refreshToken(refreshToken:$token){
     success
@@ -46,12 +46,21 @@ mutation REFRESH($token:String!){
 }
 `;
 
-export const UPDATE_ORDER = gql`
+export const UPDATE_ORDER = gql `
 mutation updateOrder($id:ID!,$action:String!){
   updateOrder(id:$id,action:$action){
     items
   }
 }
+`
+export const CASH_COMPLETE_ORDER = gql `
+mutation cashcompleteorder($address:String!,$city:String!,$state:String!,$zipcode:String!,$total:Float!){
+	cashCompleteOrder(address:$address,city:$city,state:$state,zipcode:$zipcode,total:$total){
+    response
+  }
+
+}
+
 `
 
 // export const LOGIN_USER = gql`
@@ -61,6 +70,6 @@ mutation updateOrder($id:ID!,$action:String!){
 //       errors
 //       token
 //       refreshToken
-      
+
 //     }
 //   }`;

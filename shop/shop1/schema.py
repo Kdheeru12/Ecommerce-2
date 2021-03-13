@@ -7,9 +7,8 @@ from graphene_django import DjangoObjectType, fields
 from .models import ExtendUser
 from .models import *
 from graphene_django.filter import DjangoFilterConnectionField
-
+import datetime
 # from .utils import cookieCart,cartData,guestOrder
-import django_filters
 
 
 class Users(DjangoObjectType):
@@ -28,6 +27,11 @@ class OrderItems(DjangoObjectType):
     class Meta:
         model = OrderItem
         fields: ('__all__') 
+class ShippingAddresses:
+    class Meta:
+        model = ShippingAddress
+        fields: ('__all__')
+
 
 class AuthMutation(graphene.ObjectType):
     register = mutations.Register.Field()
@@ -48,11 +52,11 @@ class Query(UserQuery,MeQuery,graphene.ObjectType):
         return Product.objects.all()
     def resolve_all_cartItems(root,info):
         if info.context.user.is_authenticated:
-            print('ddd')
+            # print('ddd')
             customer = info.context.user.customer
             order,created = Order.objects.get_or_create(customer=customer,complete=False)
-            print(order)
-            print(created)
+            # print(order)
+            # print(created)
             items = order.orderitem_set.all()
             cartItems = order.get_cart_items
             return cartItems
@@ -71,6 +75,7 @@ class AddMutation(graphene.Mutation):
         product = Product.objects.get(pk=id)
         customer = info.context.user.customer
         order,created = Order.objects.get_or_create(customer=customer,complete=False)
+        print(order)
         orderItem,created = OrderItem.objects.get_or_create(order=order,product=product)
         if action == 'add':
             orderItem.quantity = (orderItem.quantity + 1)
@@ -86,9 +91,43 @@ class AddMutation(graphene.Mutation):
             print('aaa')
         print(orderItem)
         return AddMutation(items='Success')
+class CashOrderMutation(graphene.Mutation):
+    class Arguments:
+        address = graphene.String()
+        city  = graphene.String()
+        state = graphene.String()
+        zipcode = graphene.String()
+        total = graphene.Float()
+    response = graphene.String()
+    @classmethod
+    def mutate(cls,root,info,total,address,city,state,zipcode):
+        customer = info.context.user.customer
+        order,created = Order.objects.get_or_create(customer=customer,complete=False)
+        transaction_id = datetime.datetime.now().timestamp()
+        order.transaction_id = transaction_id
+        if total == order.get_cart_total:
+            a = True
+            order.complete = True
+            order.ordertotal = total
+        if a == True:
+            ShippingAddress.objects.create(
+                customer = customer,
+                order = order,
+                address = address,
+                city =city,
+                state = state,
+                zipcode = zipcode
+            )
+            order.save()
+            print(a)
+
+            return CashOrderMutation(response='success')
+        else:
+            return CashOrderMutation(response= 'failed')
 
 
 class Mutation(AuthMutation,graphene.ObjectType):
     update_order = AddMutation.Field()
+    cash_complete_order = CashOrderMutation.Field()
 
 schema = graphene.Schema(query=Query,mutation=Mutation)

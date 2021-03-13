@@ -9,6 +9,7 @@ import test from './test';
 import ProductHome from './components/ProductsHome';
 import CartProvider from './helpers/cart/CartContext';
 import Cart from './components/Cart';
+import OrderSuccess from './components/Order-success';
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
           <Route path='/products' component={ProductHome}/>
           <Route path='/cart' component={Cart} />
           <Route path='/checkout' component={Checkout} />
-          
+          <Route path='ordersuccess' component={OrderSuccess} />
         </Switch>
         </Layout>
         </CartProvider>

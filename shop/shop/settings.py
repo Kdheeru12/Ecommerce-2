@@ -43,10 +43,6 @@ INSTALLED_APPS = [
     'graphql_auth',
     'corsheaders',
     "django_filters",
-
-
-
-
 ]
 
 MIDDLEWARE = [

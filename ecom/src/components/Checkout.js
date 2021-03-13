@@ -3,18 +3,39 @@ import {Helmet} from 'react-helmet'
 import { useForm } from 'react-hook-form';
 import Wraper from './Wraper';
 import CartContext from '../helpers/cart';
+import { useMutation } from '@apollo/client';
+import { CASH_COMPLETE_ORDER } from '../Graphql/Mutation';
 
 export default function Checkout() {
     // initialize the hook
     const [obj, setObj] = useState({});
     const { register, handleSubmit, errors } = useForm(); 
     const {cartItems,cartTotal } = useContext(CartContext)
-    
+    const [completeorder] = useMutation(CASH_COMPLETE_ORDER)
+    const [ayerror,setayerror] = useState(null)
+
+    const complete = async () =>{
+        const res = await completeorder({
+            variables:{address:obj.address,city:obj.city,state:obj.state,zipcode:obj.pincode,total:cartTotal}
+        }).catch(err =>setayerror(err))
+        if(res){
+            alert('transcation successfull')
+        }
+        else{
+            alert(ayerror)
+        }
+    }
+ 
+
     const onSubmit = (data) => {
 
         if (data !== '') {
-            alert('You submitted the form and stuff!');
-            console.log(data)
+            // alert('You submitted the form and stuff!');
+            // console.log(data)
+
+            console.log(obj);
+            complete()
+            
         } else {
             errors.showMessages();
         }
@@ -112,7 +133,7 @@ export default function Checkout() {
                                                 <div>Product <span> Total</span></div>
                                             </div>
                                             <ul className="qty">
-                                                {cartItems.map((item) => 
+                                                {cartItems && cartItems.map((item) => 
                                                    <li key={item.id}>{item.product.name} × {item.quantity} <span> {item.totalPrice}</span></li> )
                                                 }
                                             </ul>

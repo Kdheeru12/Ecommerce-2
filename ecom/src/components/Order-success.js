@@ -1,6 +1,8 @@
 import React from 'react'
 
 export default function OrderSuccess() {
+    const payment = true
+    
     return (
         (payment)?
         <div>
