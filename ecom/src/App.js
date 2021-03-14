@@ -24,7 +24,7 @@ function App() {
           <Route path='/products' component={ProductHome}/>
           <Route path='/cart' component={Cart} />
           <Route path='/checkout' component={Checkout} />
-          <Route path='ordersuccess' component={OrderSuccess} />
+          {/* <Route path='ordersuccess' component={OrderSuccess} /> */}
         </Switch>
         </Layout>
         </CartProvider>

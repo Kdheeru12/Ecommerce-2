@@ -98,7 +98,7 @@ class CashOrderMutation(graphene.Mutation):
         state = graphene.String()
         zipcode = graphene.String()
         total = graphene.Float()
-    response = graphene.String()
+    response = graphene.ID()
     @classmethod
     def mutate(cls,root,info,total,address,city,state,zipcode):
         customer = info.context.user.customer
@@ -121,7 +121,7 @@ class CashOrderMutation(graphene.Mutation):
             order.save()
             print(a)
 
-            return CashOrderMutation(response='success')
+            return CashOrderMutation(response=order)
         else:
             return CashOrderMutation(response= 'failed')
 
