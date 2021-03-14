@@ -46,6 +46,7 @@ class Query(UserQuery,MeQuery,graphene.ObjectType):
     all_users = graphene.List(Users)
     all_products = graphene.List(Products)
     all_cartItems = graphene.List(OrderItems)
+    all_orderItems = graphene.List(OrderItems,id = graphene.ID())
     def resolve_all_users(root,info):
         return ExtendUser.objects.all()
     def resolve_all_products(root,info):
@@ -64,6 +65,13 @@ class Query(UserQuery,MeQuery,graphene.ObjectType):
         #     return Product.objects.all()
         # else:
         #     return Product.objects.none()
+    def resolve_all_orderItems(root,info,id=None):
+        print(id)
+        if info.context.user.is_authenticated:
+            if id:
+                return OrderItem.objects.filter(order=id)
+            else:
+                return 'failed'
 class AddMutation(graphene.Mutation):
     class Arguments:
         id = graphene.ID()

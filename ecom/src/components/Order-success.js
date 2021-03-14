@@ -1,11 +1,53 @@
-import React from 'react'
-
+import { useQuery } from '@apollo/client'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router'
+import { ALL_ORDER_ITEMS } from '../Graphql/Queries';
+import { css } from "@emotion/core";
+import ScaleLoader from 'react-spinners/ScaleLoader'
 export default function OrderSuccess() {
     const payment = true
-    
+    const {id} = useParams()
+    const { loading, data,error } =  useQuery(ALL_ORDER_ITEMS,{
+        variables:{id:id}
+    });
+    const override = css`
+        display: block;
+        margin: 30 auto;
+        border-color: red;
+        align-items:center;
+        text-align:center;
+        justify-content:center;
+    `;
+    const [delayProduct,setDelayProduct] = useState(true)
+    const [allItems,setallItems] = useState(null)
+    useEffect(() => {
+        if (!loading) {
+            // console.log(data.allProducts);
+            // const pro = data.searchProducts.edges.map((it) =>it.node)
+            // console.log(pro);
+            console.log(data)
+            setallItems(data.allOrderitems)
+            console.log(allItems);
+
+        } else {
+            console.log('not')
+        }
+        
+        setTimeout(() => {
+            setDelayProduct(false)  
+        }, 5000);
+
+    }, [delayProduct])
     return (
+        // <div>
+        //     dd
+        // </div>
+        (delayProduct) ?
+            <ScaleLoader css={override} color={'#F78205'} loading={delayProduct} height={50} width={4} radius={2} margin={2} />
+        :
         (payment)?
         <div>
+            
             <section className="section-b-space light-layout">
                 <div className="container">
                     <div className="row">
@@ -27,48 +69,46 @@ export default function OrderSuccess() {
                         <div className="col-lg-6">
                             <div className="product-order">
                                 <h3>your order details</h3>
-                                {items.map((item, index) => {
-                                return <div className="row product-order-detail" key={index}>
+                                {allItems && allItems.map((item) => {
+                                return <div className="row product-order-detail" key={item.id}>
                                             <div className="col-3">
-                                                <img src={item.variants?
-                                                    item.variants[0].images
-                                                    :item.pictures[0]} alt="" className="img-fluid" />
+                                                <img src={`http://127.0.0.1:8000/media/${item.product.image}`} alt="" className="img-fluid" />
                                             </div>
                                             <div className="col-3 order_detail">
                                                 <div>
                                                     <h4>product name</h4>
-                                                    <h5>{item.name}</h5>
+                                                    <h5>{item.product.name}</h5>
                                                 </div>
                                             </div>
                                             <div className="col-3 order_detail">
                                                 <div>
                                                     <h4>quantity</h4>
-                                                    <h5>{item.qty}</h5>
+                                                    <h5>{item.quantity} X {item.price}</h5>
                                                 </div>
                                             </div>
                                             <div className="col-3 order_detail">
                                                 <div>
                                                     <h4>price</h4>
-                                                    <h5>{symbol}{item.sum}</h5>
+                                                    <h5>{item.totalPrice}</h5>
                                                 </div>
                                             </div>
                                         </div>
                                 })}
                                 <div className="total-sec">
                                     <ul>
-                                        <li>subtotal <span>{symbol}{orderTotal}</span></li>
+                                        <li>subtotal <span>{'d'}</span></li>
                                         <li>shipping <span>$0</span></li>
                                         <li>tax(GST) <span>$0</span></li>
                                     </ul>
                                 </div>
                                 <div className="final-total">
-                                    <h3>total <span>{symbol}{orderTotal}</span></h3>
+                                    <h3>total <span>{'dd'}</span></h3>
                                 </div>
                             </div>
                         </div>
                         <div className="col-lg-6">
                             <div className="row order-success-sec">
-                                <div className="col-sm-6">
+                                {/* <div className="col-sm-6">
                                     <h4>summery</h4>
                                     <ul className="order-detail">
                                         {(payment.paymentID)?
@@ -82,7 +122,7 @@ export default function OrderSuccess() {
                                         <li>Order Date: {CheckDate}</li>
                                         <li>Order Total: {symbol}{orderTotal}</li>
                                     </ul>
-                                </div>
+                                </div> */}
                                 <div className="col-sm-6">
                                     <h4>shipping address</h4>
                                     <ul className="order-detail">
@@ -101,7 +141,7 @@ export default function OrderSuccess() {
                                 <div className="col-md-12">
                                     <div className="delivery-sec">
                                         <h3>expected date of delivery</h3>
-                                        <h2>{deliveryDate}</h2>
+                                        <h2>{'deliveryDate'}</h2>
                                     </div>
                                 </div>
                             </div>

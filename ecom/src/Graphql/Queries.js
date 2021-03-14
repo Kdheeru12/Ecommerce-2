@@ -77,3 +77,21 @@ query search($name:String!){
 }
 `
 
+export const ALL_ORDER_ITEMS = gql`
+
+query allorderitems($id:ID!){
+  allOrderitems(id:$id){
+    id
+    product {
+      id
+      name
+      image
+    }
+    quantity
+    price
+    totalPrice
+    
+  }
+}
+`
+

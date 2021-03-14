@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useReducer } from 'react';
+import React, { useState, useEffect} from 'react';
 import Context from './index';
 import { toast } from 'react-toastify'
 import { useMutation, useQuery } from '@apollo/client';
@@ -11,9 +11,9 @@ const CartProvider = (props) => {
   const [delayProduct,setDelayProduct] = useState(true)
   const [cartItems, setCartItems] = useState([])
   const [ayerror,setayerror] = useState(null)
-  const [cartTotal, setCartTotal] = useState(0);
-  const [quantity, setQuantity] = useState(1);
-  const [stock, setStock] = useState('InStock');
+  // const [cartTotal, setCartTotal] = useState(0);
+  // const [quantity, setQuantity] = useState(1);
+  // const [stock, setStock] = useState('InStock');
   const [search, setsearch] = useState(" ");
   const [updateCart] = useMutation(UPDATE_ORDER);
   // console.log(cartItems)

@@ -5,6 +5,8 @@ import ProductList from './ProductList';
 import Wraper from './Wraper';
 import { useQuery } from '@apollo/client';
 import { ALL_PRODUCTS,ALL_SEARCH_PRODUCTS, SEARCH_PRODUCTS } from '../Graphql/Queries';
+import { css } from "@emotion/core";
+import ScaleLoader from 'react-spinners/ScaleLoader'
 
 function ProductHome() {
     const [delayProduct,setDelayProduct] = useState(true)
@@ -42,8 +44,19 @@ function ProductHome() {
 
 
     }
+    const override = css`
+    display: block;
+    margin: 10 auto;
+    padding:auto;
+    align-items:center;
+    text-align:center;
+    justify-content:center;
+`;
     console.log(products);
         return (
+            (delayProduct)?
+            <ScaleLoader css={override} color={'#F78205'} loading={delayProduct} height={50} width={4} radius={2} margin={2} />
+            :
             <div>
                 <Wraper title={'Collection'}/>
 

@@ -5,6 +5,7 @@ import Wraper from './Wraper';
 import CartContext from '../helpers/cart';
 import { useMutation } from '@apollo/client';
 import { CASH_COMPLETE_ORDER } from '../Graphql/Mutation';
+import { useHistory } from 'react-router';
 
 export default function Checkout() {
     // initialize the hook
@@ -13,15 +14,23 @@ export default function Checkout() {
     const {cartItems,cartTotal } = useContext(CartContext)
     const [completeorder] = useMutation(CASH_COMPLETE_ORDER)
     const [ayerror,setayerror] = useState(null)
-
+    const history = useHistory()
+    if (cartTotal == 0){
+        history.push('/products')
+    }
     const complete = async () =>{
         const res = await completeorder({
             variables:{address:obj.address,city:obj.city,state:obj.state,zipcode:obj.pincode,total:cartTotal}
 
         }).catch(err =>setayerror(err))
         if(res){
-            alert('transcation successfull')
-            console.log(res.data);
+            if(res.data.cashCompleteOrder.response == 'failed'){
+                alert('something went wrong please try again')}
+            else{
+                history.push('/cart')
+                window.location.reload()
+                console.log(res.data);
+            }
         }
         else{
             alert(ayerror)
