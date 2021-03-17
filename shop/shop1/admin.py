@@ -17,6 +17,7 @@ admin.site.register(Order)
 admin.site.register(OrderItem)
 admin.site.register(ShippingAddress)
 admin.site.register(ExtendUser)
+admin.site.register(WishListItem)
 
 app = apps.get_app_config('graphql_auth')
 

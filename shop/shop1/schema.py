@@ -14,7 +14,7 @@ import datetime
 class Users(DjangoObjectType):
     class Meta:
         model = ExtendUser
-        fields = ('email','id',)
+        fields: ('email','id',)
 
 class Products(DjangoObjectType):
     class Meta:
@@ -31,6 +31,11 @@ class ShippingAddresses:
     class Meta:
         model = ShippingAddress
         fields: ('__all__')
+class WishListItems(DjangoObjectType):
+    class Meta:
+        model = WishListItem
+        field: ('__all__')
+        
 
 
 class AuthMutation(graphene.ObjectType):
@@ -47,6 +52,7 @@ class Query(UserQuery,MeQuery,graphene.ObjectType):
     all_products = graphene.List(Products)
     all_cartItems = graphene.List(OrderItems)
     all_orderItems = graphene.List(OrderItems,id = graphene.ID())
+    all_wishlistitems = graphene.List(WishListItems)
     def resolve_all_users(root,info):
         return ExtendUser.objects.all()
     def resolve_all_products(root,info):
@@ -72,6 +78,9 @@ class Query(UserQuery,MeQuery,graphene.ObjectType):
                 return OrderItem.objects.filter(order=id)
             else:
                 return 'failed'
+    def resolve_all_wishlistitems(self, info):
+        if info.context.user.is_authenticated:
+            return WishListItem.objects.filter(customer=info.context.user.customer)
 class AddMutation(graphene.Mutation):
     class Arguments:
         id = graphene.ID()
@@ -133,9 +142,32 @@ class CashOrderMutation(graphene.Mutation):
         else:
             return CashOrderMutation(response= 'failed')
 
-
+class AddWishList(graphene.Mutation):
+    class Arguments:
+        id = graphene.ID()
+    response = graphene.String()
+    @classmethod
+    def mutate(cls,root,info,id):
+        customer = info.context.user.customer
+        product = Product.objects.get(pk=id)
+        try:
+            item = WishListItem.objects.get(product=product)
+        except:
+            item = None
+        if item:
+            WishListItem.delete(item)
+            return AddWishList(response = 'deleted')
+        else:
+            WishListItem.objects.create(
+                customer = customer,
+                product = product
+            )
+            return AddWishList(response = 'added')
+  
+                    
 class Mutation(AuthMutation,graphene.ObjectType):
     update_order = AddMutation.Field()
     cash_complete_order = CashOrderMutation.Field()
+    add_wish_list = AddWishList.Field()
 
 schema = graphene.Schema(query=Query,mutation=Mutation)
