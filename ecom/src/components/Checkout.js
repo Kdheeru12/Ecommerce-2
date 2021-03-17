@@ -12,6 +12,7 @@ export default function Checkout() {
     const [obj, setObj] = useState({});
     const { register, handleSubmit, errors } = useForm(); 
     const {cartItems,cartTotal } = useContext(CartContext)
+    console.log(cartItems);
     const [completeorder] = useMutation(CASH_COMPLETE_ORDER)
     const [ayerror,setayerror] = useState(null)
     const history = useHistory()
@@ -27,7 +28,7 @@ export default function Checkout() {
             if(res.data.cashCompleteOrder.response == 'failed'){
                 alert('something went wrong please try again')}
             else{
-                history.push('/cart')
+                history.push(`/order-success`)
                 window.location.reload()
                 console.log(res.data);
             }

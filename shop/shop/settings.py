@@ -138,8 +138,6 @@ EMAIL_HOST = 'smtp.gmail.com'
 
 EMAIL_PORT = 587
 
-EMAIL_USE_TLS = True
-
 EMAIL_HOST_USER = 'yagneshreddyjeemains2018@gmail.com'
 
 EMAIL_HOST_PASSWORD = 'kyr2nd@gmail.com'
@@ -169,6 +167,6 @@ GRAPHQL_JWT = {
         "graphql_auth.mutations.VerifyAccount",
         "graphql_auth.mutations.ObtainJSONWebToken",
     ],
-    "JWT_VERIFY_EXPIRATION":True,
-    "JWT_LONG_RUNNING_REFRESH_TOKEN":True,
+    "JWT_VERIFY_EXPIRATION":False,
+    "JWT_LONG_RUNNING_REFRESH_TOKEN":False,
 }
