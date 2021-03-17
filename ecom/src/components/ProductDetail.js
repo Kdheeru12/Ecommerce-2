@@ -2,7 +2,7 @@ import React ,{useState,useEffect,useRef} from 'react';
 import ProductDescription from './ProductDescription';
 import Wraper from './Wraper';
 import Slider from 'react-slick';
-
+import Details from '../covers/Details';
 
 // import { Container } from './styles';
 
@@ -51,6 +51,7 @@ function ProductDetail() {
   return(
       <div>
       <Wraper title = {'Product'} />
+      {/*Section Start*/}
       {(item)?
         <section >
             <div className="collection-wrapper">
@@ -77,6 +78,16 @@ function ProductDetail() {
                 </div>
             </div>
         </section> : ''}
+        {/*Section End*/}
+        <section className="tab-product m-0">
+            <div className="container">
+                <div className="row">
+                    <div className="col-sm-12 col-lg-12">
+                        <ProductDescription item={item} />
+                    </div>
+                </div>
+            </div>
+        </section>
       </div>
   );
 }
