@@ -3,6 +3,11 @@ import ProductDescription from './ProductDescription';
 import Wraper from './Wraper';
 import Slider from 'react-slick';
 import Details from '../covers/Details';
+import Smallimages from '../covers/Smallimages';
+import Price from '../covers/Price';
+import { useQuery } from '@apollo/client'
+import { useParams } from 'react-router'
+import { GET_PRODUCT } from '../Graphql/Queries';
 
 // import { Container } from './styles';
 
@@ -48,6 +53,31 @@ function ProductDetail() {
             }
         ]
     };
+    const { loading, data,error } =  useQuery(GET_PRODUCT,{
+        variables:{id:8}
+    });
+    const [item, setitem] = useState()
+    const [delayProduct,setDelayProduct] = useState(true)
+    useEffect(() => {
+        if (!loading) {
+            // console.log(data.allProducts);
+            // const pro = data.searchProducts.edges.map((it) =>it.node)
+            // console.log(pro);
+            setitem(data.getProduct)
+
+        } else {
+            console.log('not')
+        }
+        
+        setTimeout(() => {
+            setDelayProduct(false)  
+        }, 5000);
+
+    }, [delayProduct])
+    if (error){
+        console.log(error)
+    }
+console.log('shsy')
   return(
       <div>
       <Wraper title = {'Product'} />
@@ -58,21 +88,16 @@ function ProductDetail() {
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-3 col-sm-10 col-xs-12">
-                            <Slider {...products} asNavFor={this.state.nav2} ref={slider => (this.slider1 = slider)} className="product-right-slick">
-                                {item.variants.map((vari, index) =>
-                                    <div key={index}>
-                                        <ImageZoom image={vari.images} className="img-fluid image_zoom_cls-0" />
+                            
+                                    <div>
+                                        <img src={`http://127.0.0.1:8000/media/${item.image}`}  className="img-fluid image_zoom_cls-0" />
                                     </div>
-                                )}
-                            </Slider>
-                        </div>
-                        <div className="col-lg-1 col-sm-2 col-xs-12 pl-0">
-                            <SmallImages item={item} settings={productsnav} navOne={this.state.nav1} />
+                            
                         </div>
 
-                        <Details item={item} addToWishlistClicked={addToWishlist} />
+                        <Details item={item} />
 
-                        <Price symbol={symbol} item={item} navOne={this.state.nav1} addToCartClicked={addToCart} BuynowClicked={addToCartUnsafe} />
+                        <Price  item={item} navOne={nav1} />
 
                     </div>
                 </div>

@@ -10,6 +10,7 @@ import ProductHome from './components/ProductsHome';
 import CartProvider from './helpers/cart/CartContext';
 import Cart from './components/Cart';
 import OrderSuccess from './components/Order-success';
+import ProductDetail from './components/ProductDetail';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path='/login' component={Login} />
           
           <Route path='/products' component={ProductHome}/>
+          <Route path='/product-detail' component = {ProductDetail} />
           <Route path='/cart' component={Cart} />
           <Route path='/checkout' component={Checkout} />
           <Route path='/:id/ordersuccess' component={OrderSuccess} />

@@ -94,4 +94,17 @@ query allorderitems($id:ID!){
   }
 }
 `
-
+export const GET_PRODUCT = gql`
+query getproduct($id:ID!){
+  getProduct(id:$id){
+    id
+    name
+    price
+    avail
+    image
+    wishlistitemSet{
+      id
+    }
+  }
+}
+`

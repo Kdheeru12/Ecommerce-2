@@ -7,7 +7,7 @@ export default function Details({item}) {
             <h2> {item.name} </h2>
             <div className="border-product">
                 <h6 className="product-title">product details</h6>
-                <p>{item.shortDetails}</p>
+                <p>{item.name}</p>
             </div>
             <div className="single-product-tables border-product detail-section">
                 <table>
@@ -17,7 +17,7 @@ export default function Details({item}) {
                     </tr>
                     <tr>
                         <td>Color:</td>
-                        <td>{item.variants[0].color}</td>
+                        <td>{'color'}</td>
                     </tr>
                     <tr>
                         <td>Avalibility:</td>
@@ -35,7 +35,9 @@ export default function Details({item}) {
                         <li><a href="https://twitter.com/" target="_blank"><i className="fa fa-twitter"></i></a></li>
                         <li><a href="https://www.instagram.com/" target="_blank"><i className="fa fa-instagram"></i></a></li>
                     </ul>
-                        <button className="wishlist-btn" onClick={() => addToWishlistClicked(item)}>
+                        <button className="wishlist-btn" 
+                        // onClick={() => addToWishlistClicked(item)}
+                        >
                             <i className="fa fa-heart"></i><span className="title-font">Add To WishList</span>
                         </button>
                 </div>

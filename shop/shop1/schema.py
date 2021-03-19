@@ -14,7 +14,7 @@ import datetime
 class Users(DjangoObjectType):
     class Meta:
         model = ExtendUser
-        fields: ('email','id',)
+        fields= ('email','id',)
 
 class Products(DjangoObjectType):
     class Meta:
@@ -53,6 +53,7 @@ class Query(UserQuery,MeQuery,graphene.ObjectType):
     all_cartItems = graphene.List(OrderItems)
     all_orderItems = graphene.List(OrderItems,id = graphene.ID())
     all_wishlistitems = graphene.List(WishListItems)
+    get_product = graphene.Field(Products,id = graphene.ID())
     def resolve_all_users(root,info):
         return ExtendUser.objects.all()
     def resolve_all_products(root,info):
@@ -81,6 +82,15 @@ class Query(UserQuery,MeQuery,graphene.ObjectType):
     def resolve_all_wishlistitems(self, info):
         if info.context.user.is_authenticated:
             return WishListItem.objects.filter(customer=info.context.user.customer)
+    def resolve_get_product(self,info,id=None):
+        if id:
+            try:
+                return Product.objects.get(id=id)
+            except:
+                return 'invalid Id'
+        else:
+            return 'failed'
+
 class AddMutation(graphene.Mutation):
     class Arguments:
         id = graphene.ID()
