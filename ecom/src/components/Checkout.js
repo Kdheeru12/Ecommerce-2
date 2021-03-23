@@ -6,6 +6,7 @@ import CartContext from '../helpers/cart';
 import { useMutation } from '@apollo/client';
 import { CASH_COMPLETE_ORDER } from '../Graphql/Mutation';
 import { useHistory } from 'react-router';
+import { PayPalButton } from "react-paypal-button-v2";
 
 export default function Checkout() {
     // initialize the hook
@@ -192,7 +193,31 @@ export default function Checkout() {
                                             <div className="text-right">
                                                 <button type="Submit" className="btn-solid btn" >Place Order</button>
                                             </div>
-                                           
+                                            <PayPalButton
+                                            amount="1100"
+                                            currency="INR"
+                                            // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
+                                            onSuccess={(details, data) => {
+                                              alert("Transaction completed by " + details.payer.name.given_name);
+                                    
+                                              // OPTIONAL: Call your server to save the transaction
+                                            //   return fetch("/paypal-transaction-complete", {
+                                            //     method: "post",
+                                            //     body: JSON.stringify({
+                                            //       orderId: data.orderID
+                                            //     })
+                                            //   });
+                                            }}
+                                            catchError	= {(err)=>{
+                                                alert(err)
+                                            }}
+                                            onCancel = {(data)=>{
+                                                alert('cancel')
+                                            }}
+                                            options={{
+                                              clientId: "AUw2Brm8V3n76kaE9ijuQR5fTr4m2gqzUHVMcFfBtPSjTxVAo4v96M-hzPdtgYkXoi3ZVJes9ddajSg6"
+                                            }}
+                                          />
                                         </div>
                                     </div>
                                 </div>
