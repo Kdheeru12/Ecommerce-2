@@ -7,7 +7,7 @@ import { ApolloClient, ApolloProvider, InMemoryCache,HttpLink,from,makeVar } fro
 import { onError } from "@apollo/client/link/error";
 import Error from './covers/Error';
 import { setContext } from '@apollo/client/link/context';
-
+import * as ServiceWorker from './serviceworker'
 export  const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors)
     graphQLErrors.map(({ message, locations, path }) =>
@@ -73,7 +73,10 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
+
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+ServiceWorker.register()
+
