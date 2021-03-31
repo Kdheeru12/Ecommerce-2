@@ -28,7 +28,7 @@ function ProductList({product}) {
 
             <div className="img-wrapper">
                     <div className="front">
-                        <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${product.id}`} ><img
+                        <Link to={`${process.env.PUBLIC_URL}/${product.id}/product-detail`} ><img
                         // src={product.variants?
                         //     this.state.image?this.state.image:product.variants[0].images
                         //     :product.pictures[0]}
@@ -73,7 +73,7 @@ function ProductList({product}) {
                     <div className="rating">
                         {5}
                     </div>
-                    <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${product.id}`}>
+                    <Link to={`${process.env.PUBLIC_URL}/${product.id}/product-detail`}>
                         <h6>{product.name}</h6>
                     </Link>
                     <h4>{}{product.price}
@@ -144,7 +144,7 @@ function ProductList({product}) {
                                         <div className="product-buttons">
                                             <button  className="btn btn-solid"  >add to cart</button>
                                             {/* onClick={() => onAddToCartClicked(product, quantity)} */}
-                                            <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${product.id}`} className="btn btn-solid">view detail</Link>
+                                            <Link to={`${process.env.PUBLIC_URL}/${product.id}/product-detail`} className="btn btn-solid">view detail</Link>
                                         </div>
                                     </div>
                                 </div>

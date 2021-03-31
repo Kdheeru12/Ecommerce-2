@@ -33,32 +33,16 @@ export default function ProductDescription() {
                         <table className="table table-striped mb-0">
                             <tbody>
                             <tr>
-                                <th>Ideal For :</th>
-                                <td>Women's</td>
+                                <th>category</th>
+                                <td>food item</td>
                             </tr>
                             <tr>
-                                <th>Pattern :</th>
-                                <td>Embroidered</td>
+                                <th>instock :</th>
+                                <td>yes</td>
                             </tr>
                             <tr>
-                                <th>Dress Fabric :</th>
-                                <td>Silk</td>
-                            </tr>
-                            <tr>
-                                <th>Type :</th>
-                                <td>Ghagra, Choli, Dupatta Set</td>
-                            </tr>
-                            <tr>
-                                <th>Neck :</th>
-                                <td>Round Neck</td>
-                            </tr>
-                            <tr>
-                                <th>Sleeve :</th>
-                                <td>3/4 Sleeve</td>
-                            </tr>
-                            <tr>
-                                <th>Work :</th>
-                                <td>N/A</td>
+                                <th>home delivery :</th>
+                                <td>yes</td>
                             </tr>
                             </tbody>
                         </table>

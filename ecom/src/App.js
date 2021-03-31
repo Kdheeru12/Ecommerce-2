@@ -19,12 +19,12 @@ function App() {
         <CartProvider>
         <Layout>
         <Switch>
-          <Route exact path='/' component={test}/>
+          <Route exact path='/' component={ProductHome}/>
           <Route path='/signup' component={Signup} />
           <Route path='/login' component={Login} />
           
           <Route path='/products' component={ProductHome}/>
-          <Route path='/product-detail' component = {ProductDetail} />
+          <Route path='/:id/product-detail' component = {ProductDetail} />
           <Route path='/cart' component={Cart} />
           <Route path='/checkout' component={Checkout} />
           <Route path='/:id/ordersuccess' component={OrderSuccess} />

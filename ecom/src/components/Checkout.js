@@ -16,6 +16,7 @@ export default function Checkout() {
     console.log(cartItems);
     const [completeorder] = useMutation(CASH_COMPLETE_ORDER)
     const [ayerror,setayerror] = useState(null)
+    const [paypal, setpaypal] = useState(false)
     const history = useHistory()
     if (cartTotal == 0){
         history.push('/products')
@@ -171,35 +172,35 @@ export default function Checkout() {
                                         </div>
 
                                         <div className="payment-box">
-                                            {/* <div className="upper-box">
+                                             <div className="upper-box">
                                                 <div className="payment-options">
                                                     <ul>
                                                         <li>
                                                             <div className="radio-option stripe">
-                                                                <input type="radio" name="payment-group" id="payment-2" defaultChecked={true} onClick={() => this.checkhandle('stripe')} />
-                                                                <label htmlFor="payment-2">Stripe</label>
+                                                                <input type="radio" name="payment-group" id="payment-2" defaultChecked={true} onClick={() => setpaypal(false)} />
+                                                                <label htmlFor="payment-2">Cash on delivery</label>
                                                             </div>
                                                         </li>
                                                         <li>
                                                             <div className="radio-option paypal">
-                                                                <input type="radio" name="payment-group" id="payment-1" onClick={() => this.checkhandle('paypal')} />
+                                                                <input type="radio" name="payment-group" id="payment-1"  onClick={() => setpaypal(true)} />
                                                                     <label htmlFor="payment-1">PayPal<span className="image"><img src={`${process.env.PUBLIC_URL}/assets/images/paypal.png`} alt=""/></span></label>
                                                             </div>
                                                         </li>
                                                     </ul>
                                                 </div>
-                                            </div> */}
-                   
+                                            </div> 
+                                            {!paypal ?
                                             <div className="text-right">
                                                 <button type="Submit" className="btn-solid btn" >Place Order</button>
                                             </div>
+                                            :
                                             <PayPalButton
-                                            amount="1100"
+                                            amount={cartTotal}
                                             currency="INR"
                                             // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
                                             onSuccess={(details, data) => {
                                               alert("Transaction completed by " + details.payer.name.given_name);
-                                    
                                               // OPTIONAL: Call your server to save the transaction
                                             //   return fetch("/paypal-transaction-complete", {
                                             //     method: "post",
@@ -207,6 +208,7 @@ export default function Checkout() {
                                             //       orderId: data.orderID
                                             //     })
                                             //   });
+                                            return handleSubmit(onSubmit)
                                             }}
                                             catchError	= {(err)=>{
                                                 alert(err)
@@ -217,7 +219,7 @@ export default function Checkout() {
                                             options={{
                                               clientId: "AUw2Brm8V3n76kaE9ijuQR5fTr4m2gqzUHVMcFfBtPSjTxVAo4v96M-hzPdtgYkXoi3ZVJes9ddajSg6"
                                             }}
-                                          />
+                                          />}
                                         </div>
                                     </div>
                                 </div>

@@ -11,13 +11,10 @@ export default function Details({item}) {
             </div>
             <div className="single-product-tables border-product detail-section">
                 <table>
-                    <tbody><tr>
-                        <td>Febric:</td>
-                        <td>Chiffon</td>
-                    </tr>
+                    <tbody>
                     <tr>
-                        <td>Color:</td>
-                        <td>{'color'}</td>
+                        <td>price:</td>
+                        <td>{item.price}</td>
                     </tr>
                     <tr>
                         <td>Avalibility:</td>

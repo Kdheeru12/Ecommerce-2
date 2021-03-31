@@ -12,6 +12,7 @@ import { GET_PRODUCT } from '../Graphql/Queries';
 // import { Container } from './styles';
 
 function ProductDetail() {
+    const {id} = useParams()
     const [nav1, setnav1] = useState(null)
     const [nav2, setnav2] = useState(null)
     const [vertical, setvertical] = useState(null)
@@ -54,7 +55,7 @@ function ProductDetail() {
         ]
     };
     const { loading, data,error } =  useQuery(GET_PRODUCT,{
-        variables:{id:8}
+        variables:{id:id}
     });
     const [item, setitem] = useState()
     const [delayProduct,setDelayProduct] = useState(true)
