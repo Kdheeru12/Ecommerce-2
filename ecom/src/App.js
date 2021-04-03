@@ -11,6 +11,7 @@ import CartProvider from './helpers/cart/CartContext';
 import Cart from './components/Cart';
 import OrderSuccess from './components/Order-success';
 import ProductDetail from './components/ProductDetail';
+import Wishlist from './components/Wishlist';
 // import ProductAdmin from './Dashboard/ProductAdmin';
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           <Route path='/products' component={ProductHome}/>
           <Route path='/:id/product-detail' component = {ProductDetail} />
           <Route path='/cart' component={Cart} />
+          <Route path='/wishlist' component={Wishlist} />
           <Route path='/checkout' component={Checkout} />
           <Route path='/:id/ordersuccess' component={OrderSuccess} />
         </Switch>

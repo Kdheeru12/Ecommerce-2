@@ -11,7 +11,7 @@ function ProductList({product}) {
     const [quantity, setqunatity] = useState(1);
     const onOpenModal = () => setOpen(true);
     const onCloseModal = () => setOpen(false);
-    const {addToCart, } = useContext(CartContext)
+    const {addToCart,wishitems,addtowish} = useContext(CartContext)
     
     const plusQty = (id) => {
         console.log(id);
@@ -42,10 +42,10 @@ function ProductList({product}) {
                     >
                         <i className="fa fa-shopping-cart" aria-hidden="true"></i>
                     </button>
-                    <a href="javascript:void(0)" title="Add to Wishlist" 
-                    //onClick={onAddToWishlistClicked} 
+                    <a  href="javascript:void(0)" title="Add to Wishlist" 
+                    onClick={()=>addtowish(product.id)} 
                     >
-                        <i className="fa fa-heart" aria-hidden="true"></i>
+                        <i  style={{color: (wishitems.indexOf(product.id)!==-1) ? "red" :"black"}} className="fa fa-heart" aria-hidden="true"></i>
                     </a>
                     <a href="javascript:void(0)" data-toggle="modal"
                         data-target="#quick-view"

@@ -39,6 +39,16 @@ query{
     price
     totalPrice
   }
+  allWishlistitems {
+    id
+    product {
+      id
+      name
+      image
+      price
+    }
+  	dateAdded
+  }
     
 }
 `
@@ -105,6 +115,20 @@ query getproduct($id:ID!){
     wishlistitemSet{
       id
     }
+  }
+}
+`
+export const ALL_WISHLIST = gql`
+query{
+  allWishlistitems {
+    id
+    product {
+      id
+      name
+      image
+      price
+    }
+  	dateAdded
   }
 }
 `

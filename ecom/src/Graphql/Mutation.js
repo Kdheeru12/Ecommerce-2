@@ -60,8 +60,16 @@ mutation cashcompleteorder($address:String!,$city:String!,$state:String!,$zipcod
   }
 
 }
-
 `
+export const UPDATE_WISHLIST = gql`
+mutation ADD_WISHLIST($id:ID!){
+  addWishList(id:$id){
+    response
+  } 
+}
+`
+
+
 
 // export const LOGIN_USER = gql`
 // mutation TOKEN($username:String!,$password:String!){

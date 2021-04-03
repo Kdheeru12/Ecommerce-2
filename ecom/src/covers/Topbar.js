@@ -25,10 +25,10 @@ class TopBar extends Component {
                                     <i className="fa fa-user" aria-hidden="true"></i> {'my_account'}
                                     <ul className="onhover-show-div">
                                         <li>
-                                            <Link to={`${process.env.PUBLIC_URL}/pages/login`} data-lng="en">Login</Link>
+                                            <Link to={`${process.env.PUBLIC_URL}/login`} data-lng="en">Login</Link>
                                         </li>
                                         <li>
-                                            <Link to={`${process.env.PUBLIC_URL}/pages/register`} data-lng="en">Register</Link>
+                                            <Link to={`${process.env.PUBLIC_URL}/signup`} data-lng="en">Register</Link>
                                         </li>
                                     </ul>
                                 </li>

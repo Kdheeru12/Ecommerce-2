@@ -158,6 +158,7 @@ class AddWishList(graphene.Mutation):
     response = graphene.String()
     @classmethod
     def mutate(cls,root,info,id):
+        print(id)
         customer = info.context.user.customer
         product = Product.objects.get(pk=id)
         try:
