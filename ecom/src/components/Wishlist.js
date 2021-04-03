@@ -1,4 +1,4 @@
-import React,{useContext,useState,useEffect} from 'react';
+import React,{useContext} from 'react';
 import {Helmet} from 'react-helmet'
 import {Link} from 'react-router-dom'
 import Wraper from './Wraper';
@@ -7,53 +7,14 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function Wishlist() {
-    // const [delayProduct,setDelayProduct] = useState(true)
-    // const [wishlist, setwishlist] = useState([])
-    // const { loading, data,error,refetch } =  useQuery(ALL_WISHLIST);
-    // const [updatewishlist] = useMutation(UPDATE_WISHLIST);
-    const {addToCart,wishlist } = useContext(CartContext)
-
-    // const addtowish = async(id) =>{
-    //     const resp = await updatewishlist({
-    //         varibles:{id:id}
-    //     })
-    // }
-    // useEffect(() => {
-    //     if(error){
-    //       console.log('de');
-    //     }
-    //     if(loading){
-    //       console.log('loading');
-    //     }
-    //     if (!loading) {
-    //         // console.log(data)
-    //         setwishlist(data.allWishlistitems)
-
-    //         console.log(data.allWishlistitems)
-    //       } else {
-    //           console.log('not')
-    //       }
-    //       setTimeout(() => {
-    //           setDelayProduct(false)  
-    //       }, 5000);
-      
-    // }, [delayProduct])
-
-    // console.log(cartItems);
+    const {addToCart,wishlist,addtowish } = useContext(CartContext)
     const plusQty = (id) => {
         console.log(id);
         if(true) {
             console.log('ddd');
             addToCart(id,'add')
+            addtowish(id)
         }
-    }
-    const minusQty = (id,quantity) => {
-        if(quantity >= 1) {
-            addToCart(id,'remove')
-        }
-    }
-    const deleteQty =(id) =>{
-        addToCart(id,'delete')
     }
     return (
         <div>
@@ -115,7 +76,7 @@ export default function Wishlist() {
                                                     <div className="col-xs-3">
                                                         <h2 className="td-color">
                                                             <a href={null} type="button" className="icon" //onClick={() => this.props.removeFromCart(item)}
-                                                            onClick={() =>deleteQty(items.product.id)}
+                                                            onClick={()=>addtowish(items.product.id)}
                                                             >
                                                                 <i className="icon-close"></i>
                                                             </a>
@@ -128,21 +89,11 @@ export default function Wishlist() {
                                                 <div className="qty-box">
                                                     <div className="input-group">
                                                         <span className="input-group-prepend">
-                                                            <button type="button" className="btn quantity-left-minus" //onClick={() => this.props.decrementQty(item.id)} 
-                                                            onClick={() =>minusQty(items.product.id,items.quantity)}
-                                                            data-type="minus" data-field="">
-                                                                <i className="fa fa-angle-left"></i>
-                                                            </button>
-                                                        </span>
-                                                        <input type="text" name="quantity" value={items.quantity} readOnly={true} className="form-control input-number" />
-
-                                                        <span className="input-group-prepend">
                                                         <button className="btn quantity-right-plus" //onClick={() => this.props.incrementQty(item, 1)}  
                                                         onClick={() =>plusQty(items.product.id)}
                                                         data-type="plus" //disabled={(item.qty >= item.stock)? true : false}
                                                         >
-                                                        <i className="fa fa-angle-right"></i>
-                                                        </button>
+                                                        move to cart                                                        </button>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -150,7 +101,7 @@ export default function Wishlist() {
                                             </td>
                                             <td>
                                                 <a href={null} type="button" className="icon" //onClick={() => this.props.removeFromCart(item)}
-                                                onClick={() =>deleteQty(items.product.id)}
+                                                onClick={()=>addtowish(items.product.id)}
                                                 >
                                                     <i className="fa fa-times"></i>
                                                 </a>

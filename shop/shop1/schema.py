@@ -167,7 +167,7 @@ class AddWishList(graphene.Mutation):
             item = None
         if item:
             WishListItem.delete(item)
-            return AddWishList(response = 'deleted')
+            return AddWishList(response = 'removed')
         else:
             WishListItem.objects.create(
                 customer = customer,

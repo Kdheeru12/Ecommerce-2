@@ -56,8 +56,18 @@ const addtowish = async(id) =>{
       variables:{id:id}
     }).catch(err=>setayerror(err))
     if(resp){
-      console.log(resp.data)
-      console.log(resp)
+      console.log(resp.data.addWishList.response)
+      toast.success(`Product ${resp.data.addWishList.response} to wishlist`,{
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        Transition:"Slide",
+        Delay:'5000'
+        });
       refetch()
       setayerror(null)
     }
