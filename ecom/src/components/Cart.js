@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function Cart() {
 
-    const {addToCart,cartItems,cartTotal } = useContext(CartContext)
+    const {addToCart,cartItems,cartTotal,addtowish,wishitems } = useContext(CartContext)
     console.log(cartItems);
     const plusQty = (id) => {
         console.log(id);
@@ -25,6 +25,11 @@ export default function Cart() {
     const deleteQty =(id) =>{
         addToCart(id,'delete')
     }
+    const addtowishlist =(id)=>{
+        addtowish(id)
+        addToCart(id,'delete')
+
+    }
     return (
         <div>
             {/*SEO Support*/}
@@ -36,7 +41,7 @@ export default function Cart() {
 
             <Wraper title={'Cart Page'}/>
 
-            {(cartItems) ?
+            {(cartItems.length !=0) ?
             <section className="cart-section section-b-space">
                 <div className="container">
                     <div className="row">
@@ -59,11 +64,11 @@ export default function Cart() {
                                     <tbody key={items.id}>
                                         <tr>
                                             <td>
-                                                <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/1`}>
+                                                <Link to={`${process.env.PUBLIC_URL}/${items.product.id}/product-detail`}>
                                                     <img src={`http://127.0.0.1:8000/media/${items.product.image}`}/>
                                                 </Link>
                                             </td>
-                                            <td><Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/1`}>{items.product.name}</Link>
+                                            <td><Link to={`${process.env.PUBLIC_URL}/${items.product.id}/product-detail`}>{items.product.name}</Link>
                                                 <div className="mobile-cart-content row">
                                                     <div className="col-xs-3">
                                                         {/* <div className="qty-box">
@@ -138,6 +143,16 @@ export default function Cart() {
                                                 onClick={() =>deleteQty(items.product.id)}
                                                 >
                                                     <i className="fa fa-times"></i>
+                                                    {wishitems.indexOf(items.product.id)===-1 ?
+                                                    <span className="input-group-prepend">
+                                                    <button type="button" className="btn quantity-left-minus" //onClick={() => this.props.decrementQty(item.id)} 
+                                                    onClick={() =>addtowishlist(items.product.id)}
+                                                    data-type="minus" data-field="">
+                                                    move to wishlist
+                                                    </button>     
+                                                </span>
+                                                : ""
+                                                }
                                                 </a>
                                             </td>
                                             <td><h2 className="td-color">{items.totalPrice}</h2></td>

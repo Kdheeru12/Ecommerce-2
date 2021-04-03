@@ -27,7 +27,7 @@ export default function Wishlist() {
 
             <Wraper title={'wishlist'}/>
 
-            {(wishlist) ?
+            {(wishlist.length != 0) ?
             <section className="cart-section section-b-space">
                 <div className="container">
                     <div className="row">
@@ -38,9 +38,9 @@ export default function Wishlist() {
                                     <th scope="col">image</th>
                                     <th scope="col">product name</th>
                                     <th scope="col">price</th>
-                                    <th scope="col">quantity</th>
+                                    <th scope="col">toggle</th>
                                     <th scope="col">action</th>
-                                    <th scope="col">total</th>
+                                    <th scope="col">date added</th>
                                 </tr>
                                 </thead>
                                 {
@@ -50,11 +50,11 @@ export default function Wishlist() {
                                     <tbody key={items.id}>
                                         <tr>
                                             <td>
-                                                <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/1`}>
+                                                <Link to={`${process.env.PUBLIC_URL}/${items.product.id}/product-detail`}>
                                                     <img src={`http://127.0.0.1:8000/media/${items.product.image}`}/>
                                                 </Link>
                                             </td>
-                                            <td><Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/1`}>{items.product.name}</Link>
+                                            <td><Link to={`${process.env.PUBLIC_URL}/${items.product.id}/product-detail`}>{items.product.name}</Link>
                                                 <div className="mobile-cart-content row">
                                                     <div className="col-xs-3">
                                                             <div className="qty-box">
@@ -106,18 +106,10 @@ export default function Wishlist() {
                                                     <i className="fa fa-times"></i>
                                                 </a>
                                             </td>
-                                            <td><h2 className="td-color">{items.product.price}</h2></td>
+                                            <td><h3 className="td-color">{new Date (items.dateAdded).toDateString()}</h3></td>
                                         </tr>
                                     </tbody> 
                                         ))}
-                            </table>
-                            <table className="table cart-table table-responsive-md">
-                                <tfoot>
-                                <tr>
-                                    <td>total price :</td>
-                                    <td><h2>{'dd'} </h2></td>
-                                </tr>
-                                </tfoot>
                             </table>
                         </div>
                     </div>
