@@ -108,3 +108,23 @@ query{
   }
 }
 `
+export const GET_ORDER = gql`
+query GetOrder($id:ID!){
+  getOrder(id:$id){
+    id
+    ordertotal
+    transactionId
+    orderitemSet {
+      product {
+        id
+        name
+        price
+        image
+        
+      }
+      quantity
+      totalPrice
+    }
+  }
+}
+`

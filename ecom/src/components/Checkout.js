@@ -30,9 +30,10 @@ export default function Checkout() {
             if(res.data.cashCompleteOrder.response == 'failed'){
                 alert('something went wrong please try again')}
             else{
-                history.push(`/order-success`)
+                history.push(`/${res.data.cashCompleteOrder.response}/ordersuccess`)
                 window.location.reload()
-                console.log(res.data);
+                console.log(res.data.cashCompleteOrder.response);
+
             }
         }
         else{

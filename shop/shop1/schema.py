@@ -39,6 +39,10 @@ class WishListItems(DjangoObjectType):
     class Meta:
         model = WishListItem
         field: ('__all__')
+class Orders(DjangoObjectType):
+    class Meta:
+        model=Order
+        fields:('__all__')
         
 
 
@@ -59,6 +63,7 @@ class Query(UserQuery,MeQuery,graphene.ObjectType):
     all_wishlistitems = graphene.List(WishListItems)
     get_product = graphene.Field(Products,id = graphene.ID())
     get_search = graphene.List(Products,q=graphene.String())
+    get_order = graphene.List(Orders,id = graphene.ID())
     def resolve_all_users(root,info):
         return ExtendUser.objects.all()
     def resolve_all_products(root,info):
@@ -106,6 +111,11 @@ class Query(UserQuery,MeQuery,graphene.ObjectType):
             name__icontains = q
         )
         return search_list
+    def resolve_get_order(self,info,id=None):
+        if info.context.user.is_authenticated:
+            return Order.objects.filter(id=id)
+        else:
+            raise Exception('unauthorized')
 
 class AddMutation(graphene.Mutation):
     class Arguments:

@@ -1,13 +1,13 @@
 import { useQuery } from '@apollo/client'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
-import { ALL_ORDER_ITEMS } from '../Graphql/Queries';
+import { ALL_ORDER_ITEMS, GET_ORDER } from '../Graphql/Queries';
 import { css } from "@emotion/core";
 import ScaleLoader from 'react-spinners/ScaleLoader'
 export default function OrderSuccess() {
     const payment = true
     const {id} = useParams()
-    const { loading, data,error } =  useQuery(ALL_ORDER_ITEMS,{
+    const { loading, data,error } =  useQuery(GET_ORDER,{
         variables:{id:id}
     });
     const override = css`
@@ -20,15 +20,11 @@ export default function OrderSuccess() {
     `;
     const [delayProduct,setDelayProduct] = useState(true)
     const [allItems,setallItems] = useState(null)
+    const [trans, settrans] = useState(0)
     useEffect(() => {
-        if (!loading) {
-            // console.log(data.allProducts);
-            // const pro = data.searchProducts.edges.map((it) =>it.node)
-            // console.log(pro);
-            console.log(data)
-            setallItems(data.allOrderitems)
-            console.log(allItems);
-
+        if (!loading) {;
+            setallItems(data.getOrder[0])
+            settrans(data.getOrder[0].transactionId)
         } else {
             console.log('not')
         }
@@ -36,7 +32,6 @@ export default function OrderSuccess() {
         setTimeout(() => {
             setDelayProduct(false)  
         }, 5000);
-
     }, [delayProduct])
     return (
         // <div>
@@ -45,7 +40,7 @@ export default function OrderSuccess() {
         (delayProduct) ?
             <ScaleLoader css={override} color={'#F78205'} loading={delayProduct} height={50} width={4} radius={2} margin={2} />
         :
-        (payment)?
+        (trans)?
         <div>
             
             <section className="section-b-space light-layout">
@@ -56,7 +51,7 @@ export default function OrderSuccess() {
                                 <i className="fa fa-check-circle" aria-hidden="true"></i>
                                 <h2>thank you</h2>
                                 <p>Payment Is Has Been Received Order Placed Successfully</p>
-                                <p>Transaction ID: {(payment.paymentID)?payment.paymentID:payment.id}</p>
+                                <p>transactionId: {Number(allItems.transactionId)}</p>
                             </div>
                         </div>
                     </div>
@@ -69,7 +64,7 @@ export default function OrderSuccess() {
                         <div className="col-lg-6">
                             <div className="product-order">
                                 <h3>your order details</h3>
-                                {allItems && allItems.map((item) => {
+                                {allItems.orderitemSet && allItems.orderitemSet.map((item) => {
                                 return <div className="row product-order-detail" key={item.id}>
                                             <div className="col-3">
                                                 <img src={`http://127.0.0.1:8000/media/${item.product.image}`} alt="" className="img-fluid" />
@@ -102,7 +97,7 @@ export default function OrderSuccess() {
                                     </ul>
                                 </div>
                                 <div className="final-total">
-                                    <h3>total <span>{'dd'}</span></h3>
+                                    <h3>total <span>{allItems.ordertotal}</span></h3>
                                 </div>
                             </div>
                         </div>
