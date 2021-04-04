@@ -30,7 +30,11 @@ export default function Checkout() {
             if(res.data.cashCompleteOrder.response == 'failed'){
                 alert('something went wrong please try again')}
             else{
-                history.push(`/${res.data.cashCompleteOrder.response}/ordersuccess`)
+                history.push({pathname:'/ordersuccess',
+                    state:{
+                        id : res.data.cashCompleteOrder.response
+                    }
+                })
                 window.location.reload()
                 console.log(res.data.cashCompleteOrder.response);
 

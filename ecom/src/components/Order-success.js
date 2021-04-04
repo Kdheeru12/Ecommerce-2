@@ -1,12 +1,20 @@
 import { useQuery } from '@apollo/client'
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
-import { ALL_ORDER_ITEMS, GET_ORDER } from '../Graphql/Queries';
+import { useHistory, useLocation } from 'react-router'
+import { GET_ORDER } from '../Graphql/Queries';
 import { css } from "@emotion/core";
 import ScaleLoader from 'react-spinners/ScaleLoader'
 export default function OrderSuccess() {
-    const payment = true
-    const {id} = useParams()
+    const history = useHistory()
+    try{
+        const location = useLocation();
+        var id = location.state.id
+        console.log(id)
+    }
+    catch{
+        history.push('/')
+    }
+
     const { loading, data,error } =  useQuery(GET_ORDER,{
         variables:{id:id}
     });
@@ -35,6 +43,9 @@ export default function OrderSuccess() {
             setDelayProduct(false)  
         }, 500);
     }, [delayProduct])
+    if(!id){
+        history.push('/')
+    }
     return (
         // <div>
         //     dd

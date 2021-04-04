@@ -123,6 +123,7 @@ query GetOrder($id:ID!){
         
       }
       quantity
+      price
       totalPrice
     }
     shippingaddressSet{

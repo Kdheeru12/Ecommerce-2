@@ -75,8 +75,10 @@ export default function HeaderOne() {
 								<div className="main-menu">
 									<div className="menu-left">
 										<div className="navbar">
-											<a href="javascript:void(0)" onClick={openNav}>
-												<div className="bar-style"> <i className="fa fa-bars sidebar-bar" aria-hidden="true"></i></div>
+											<a href='/' 
+											//onClick={openNav}
+											>
+												<div className="bar-style"> <i className="fa fa-home " aria-hidden="true"> Home</i></div>
 											</a>
 											{/*SideBar Navigation Component*/}
 											<SideBar/>
