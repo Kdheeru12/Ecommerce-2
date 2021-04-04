@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useContext, useState} from 'react'
 import Wraper from '../components/Wraper'
 import { useForm } from 'react-hook-form';
 import LayoutTwo from '../covers/Layout1';
@@ -7,6 +7,7 @@ import Error from '../covers/Error';
 import { LOGIN_USER } from '../Graphql/Mutation';
 import { useHistory } from 'react-router-dom';
 import { isLoggedInVar } from '..';
+import CartContext from '../helpers/cart';
 // pattern: /[6-9]{1}[0-9]{9}/
 export default function Login(props) {
     const [obj, setObj] = useState({});
@@ -16,6 +17,7 @@ export default function Login(props) {
     const [loginUser] = useMutation(LOGIN_USER)
     const [lerror, setlerror] = useState(null)
     const history = useHistory()
+    const {setauth} = useContext(CartContext)
     // console.log(hello);
     // console.log(props.location.state)
     // console.log();
@@ -32,9 +34,11 @@ export default function Login(props) {
                 if(res){
                     if(res.data.tokenAuth.success){
                         localStorage.setItem('token',res.data.tokenAuth.token)
-                        localStorage.setItem('refresh',res.data.tokenAuth.refreshToken)
+
                         isLoggedInVar(true)
                         history.push('/')
+                        window.location.reload()
+                        setauth(true)
                     }
                     else if(res.data.tokenAuth.errors){
                         setlerror(res.data.tokenAuth.errors.nonFieldErrors[0].message)
@@ -42,7 +46,6 @@ export default function Login(props) {
                 }
             }
             sent()
-
         } else {
             errors.showMessages();
         }
@@ -80,7 +83,7 @@ export default function Login(props) {
                                         <div className="form-group">
                                         <span className="error-message">{lerror && lerror}</span>
                                         </div>
-                                        <button type="Submit" className="btn-solid btn" >Place Order</button>
+                                        <button type="Submit" className="btn-solid btn" >Login</button>
                                     </form>
                                     {ayerror && <Error setayerror={setayerror} error={ayerror} /> }
                                 </div>
@@ -92,7 +95,7 @@ export default function Login(props) {
                                     <p>Sign up for a free account at our store. Registration is quick and easy. It
                                         allows you to be able to order from our shop. To start shopping click
                                         register.</p>
-                                    <a href="#" className="btn btn-solid">Create an Account</a>
+                                    <a href="/signup" className="btn btn-solid">Create an Account</a>
                                 </div>
                             </div>
                         </div>

@@ -72,7 +72,7 @@ function ProductDetail() {
         
         setTimeout(() => {
             setDelayProduct(false)  
-        }, 5000);
+        }, 100);
 
     }, [delayProduct])
     if (error){

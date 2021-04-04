@@ -1,10 +1,12 @@
-import React, {Component} from 'react';
+
 import {Link} from 'react-router-dom';
 
+import React,{useContext} from 'react'
+import CartContext from '../helpers/cart';
+import { isLoggedInVar } from '..';
 
-class TopBar extends Component {
-
-    render() {
+export default function Topbar() {
+        console.log(isLoggedInVar())
         return (
             <div className="top-header">
                 <div className="container">
@@ -38,8 +40,4 @@ class TopBar extends Component {
                 </div>
             </div>
         )
-    }
 }
-
-
-export default TopBar;

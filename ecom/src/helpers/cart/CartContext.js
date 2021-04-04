@@ -2,8 +2,10 @@ import React, { useState, useEffect} from 'react';
 import Context from './index';
 import { toast } from 'react-toastify'
 import { useMutation, useQuery } from '@apollo/client';
-import { UPDATE_ORDER, UPDATE_WISHLIST } from '../../Graphql/Mutation';
+import { UPDATE_ORDER, UPDATE_WISHLIST, VERIFY_AUTH } from '../../Graphql/Mutation';
 import { ALL_CART } from '../../Graphql/Queries';
+import { useHistory } from 'react-router';
+import { isLoggedInVar } from '../..';
 
 
 
@@ -18,22 +20,41 @@ const CartProvider = (props) => {
   const [search, setsearch] = useState(" ");
   const [updateCart] = useMutation(UPDATE_ORDER);
   const [updatewishlist] = useMutation(UPDATE_WISHLIST)
+  const [verifyauth] = useMutation(VERIFY_AUTH)
   // console.log(cartItems)
   const { loading, data,error,refetch } =  useQuery(ALL_CART);
+  const history = useHistory()
 
+// const verify = async () =>{
+//   const token = localStorage.getItem('token')
+//   if(token != null){
+//     const ver = await verifyauth({
+//       variables:{token:token}
+//     }).catch(err =>setayerror(err))
+//     if(ver){
+//       console.log(ver.data.verifyToken)
+//       if(ver.data.verifyToken.success){
+//         setauth(true)
+//       }
+//     }
+    
+//   }
 
+// }
 
 
   // Add Product To Cart
-  const addToCart = async (item ,action) => {
+const addToCart = async (item ,action) => {
         
       const res =  await updateCart({
           variables:{id:item,action:action}
-      }).catch(err =>setayerror(err))
-      // console.log('fff');
-      // console.log(res);
+      }).catch(err =>{
+        setayerror(err)
+        isLoggedInVar(false)
+        history.push('/login')    
+      })
       if (res){
-        console.log(data.allCartitems);
+        // console.log(data.allCartitems);
         toast.success(`Product ${action}ed Successfully !`,{
           position: "top-right",
           autoClose: 2000,
@@ -48,55 +69,67 @@ const CartProvider = (props) => {
         refetch()
         setayerror(null)
       }
-      console.log(ayerror)
+
 
   }
 const addtowish = async(id) =>{
     const resp = await updatewishlist({
       variables:{id:id}
-    }).catch(err=>setayerror(err))
+    }).catch(err=>{
+    setayerror(err)
+    isLoggedInVar(false)
+    history.push('/login')}
+    )
     if(resp){
-      console.log(resp.data.addWishList.response)
       toast.success(`Product ${resp.data.addWishList.response} to wishlist`,{
         position: "top-right",
-        autoClose: 2000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
         Transition:"Slide",
-        Delay:'5000'
+        Delay:'3000'
         });
       refetch()
       setayerror(null)
     }
-    console.log(ayerror)
+    // console.log(ayerror)
+    if(ayerror){
+      isLoggedInVar(false)
+      history.push('/login')
+    }
 
 }
+
 useEffect(() => {
   if(error){
-    console.log('de');
+    // console.log(error)
+    isLoggedInVar(false)
+    history.push('/login')
   }
-  if(loading){
-    console.log('loading');
-  }
-  if (!loading) {
-      // console.log(data)
-
-      setCartItems(data.allCartitems)
-      setwishlist(data.allWishlistitems)
-    } else {
-        console.log('not')
+  else{
+    if(loading){
+      console.log('loading');
     }
-    setTimeout(() => {
-        setDelayProduct(false)  
-    }, 5000);
+    if (!loading) {
+        // console.log(data)
+        setCartItems(data.allCartitems)
+        setwishlist(data.allWishlistitems)
+      } else {
+          console.log('not')
+      }
+      setTimeout(() => {
+          setDelayProduct(false)  
+      }, 5000);
+  }
+
 
 }, [delayProduct,addToCart,addtowish])
 if(cartItems){
   var a = cartItems.map((items) =>Number(items.totalPrice))
-  console.log(a);
+  // console.log(a);
   
   
   a= a.reduce((a, b) => a + b, 0)
@@ -106,10 +139,10 @@ if(cartItems){
 }
 if (wishlist){
    var l = wishlist.map((item)=>(item.product.id))
-  console.log(l)
+  // console.log(l)
 }
 
-console.log(search);
+// console.log(search);
   return (
     <Context.Provider
       value={{
@@ -123,7 +156,7 @@ console.log(search);
         setsearch:setsearch,
         wishlist:wishlist,
         wishitems :l,
-        addtowish:addtowish
+        addtowish:addtowish,
       }}
     >
       {props.children}

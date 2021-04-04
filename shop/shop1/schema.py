@@ -8,6 +8,8 @@ from .models import ExtendUser
 from .models import *
 from graphene_django.filter import DjangoFilterConnectionField
 import datetime
+from graphql import GraphQLError
+
 # from .utils import cookieCart,cartData,guestOrder
 
 
@@ -68,6 +70,8 @@ class Query(UserQuery,MeQuery,graphene.ObjectType):
             items = order.orderitem_set.all()
             cartItems = order.get_cart_items
             return cartItems
+        else:
+            raise Exception('unauthorized')
         # if info.context.user.is_authenticated:
         #     return Product.objects.all()
         # else:
@@ -79,9 +83,13 @@ class Query(UserQuery,MeQuery,graphene.ObjectType):
                 return OrderItem.objects.filter(order=id)
             else:
                 return 'failed'
+        else:
+            raise Exception('unauthorized')
     def resolve_all_wishlistitems(self, info):
         if info.context.user.is_authenticated:
             return WishListItem.objects.filter(customer=info.context.user.customer)
+        else:
+            raise Exception('unauthorized')
     def resolve_get_product(self,info,id=None):
         if id:
             try:

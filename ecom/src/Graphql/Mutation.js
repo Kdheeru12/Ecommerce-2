@@ -21,9 +21,7 @@ mutation TOKEN($username:String!,$password:String!){
     tokenAuth(username:$username,password:$password){
       success
       errors
-      token
-      refreshToken
-      
+      token      
     }
   }`;
 
@@ -69,6 +67,15 @@ mutation ADD_WISHLIST($id:ID!){
 }
 `
 
+export const VERIFY_AUTH = gql`
+mutation VERIFY($token:String!){
+  verifyToken(token:$token){
+    success
+    errors
+  }
+  
+}
+`
 
 
 // export const LOGIN_USER = gql`

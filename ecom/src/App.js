@@ -18,20 +18,21 @@ function App() {
   return (
       <Router>
         <CartProvider>
-        <Layout>
+        
         <Switch>
-          <Route exact path='/' component={ProductHome}/>
           <Route path='/signup' component={Signup} />
           <Route path='/login' component={Login} />
-          
+          <Layout>
+          <Route exact path='/' component={ProductHome}/>
           <Route path='/products' component={ProductHome}/>
           <Route path='/:id/product-detail' component = {ProductDetail} />
           <Route path='/cart' component={Cart} />
           <Route path='/wishlist' component={Wishlist} />
           <Route path='/checkout' component={Checkout} />
           <Route path='/:id/ordersuccess' component={OrderSuccess} />
+          </Layout>
         </Switch>
-        </Layout>
+        
         </CartProvider>
       </Router>
   );

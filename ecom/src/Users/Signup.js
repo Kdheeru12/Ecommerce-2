@@ -71,7 +71,7 @@ export default function Signup() {
         <section className="register-page section-b-space">
             <div className="container">
                 <div className="row">
-                    <div className="col-lg-12">
+                    <div className="col-lg-6">
                         <h3>create account </h3>
                         <div className="theme-card">
                             <form  onSubmit={handleSubmit(onSubmit)} className="theme-form">
@@ -107,6 +107,14 @@ export default function Signup() {
                             </form>
                         </div>
                     </div>
+                    <div className="col-lg-6 right-login">
+                    <h3>New Customer</h3>
+                    <div className="theme-card authentication-right">
+                        <h6 className="title-font">Login</h6>
+                        <p>Already Have An Account Please Login</p>
+                        <a href="/login" className="btn btn-solid">Login</a>
+                    </div>
+                </div>
                 </div>
             </div>
         </section>

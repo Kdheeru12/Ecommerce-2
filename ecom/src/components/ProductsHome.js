@@ -29,7 +29,7 @@ function ProductHome() {
         
         setTimeout(() => {
             setDelayProduct(false)  
-        }, 5000);
+        }, 500);
 
     }, [delayProduct])
     const fetchMoreItems = () => {
