@@ -21,17 +21,19 @@ export default function OrderSuccess() {
     const [delayProduct,setDelayProduct] = useState(true)
     const [allItems,setallItems] = useState(null)
     const [trans, settrans] = useState(0)
+    const [address, setaddress] = useState(false)
     useEffect(() => {
         if (!loading) {;
             setallItems(data.getOrder[0])
             settrans(data.getOrder[0].transactionId)
+            setaddress(data.getOrder[0].shippingaddressSet[0])
         } else {
             console.log('not')
         }
         
         setTimeout(() => {
             setDelayProduct(false)  
-        }, 5000);
+        }, 500);
     }, [delayProduct])
     return (
         // <div>
@@ -120,12 +122,15 @@ export default function OrderSuccess() {
                                 </div> */}
                                 <div className="col-sm-6">
                                     <h4>shipping address</h4>
+                                    {address &&
+                                    
                                     <ul className="order-detail">
-                                        <li>gerg harvell</li>
-                                        <li>568, suite ave.</li>
-                                        <li>Austrlia, 235153</li>
-                                        <li>Contact No. 987456321</li>
+                                        <li>{address.address}</li>
+                                        <li>{address.zipcode}</li>
+                                        <li>{address.city}, {address.state}</li>
+                                        <li>Contact No. {address.phone}</li>
                                     </ul>
+                                }
                                 </div>
 
                                 <div className="col-sm-12 payment-mode">

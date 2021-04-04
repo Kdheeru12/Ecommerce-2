@@ -24,14 +24,13 @@ class Products(DjangoObjectType):
     class Meta:
         model= Product
         fields: ('__all__')
-        filter_fields = ['name',]
         
 
 class OrderItems(DjangoObjectType):
     class Meta:
         model = OrderItem
         fields: ('__all__') 
-class ShippingAddresses:
+class ShippingAddresses(DjangoObjectType):
     class Meta:
         model = ShippingAddress
         fields: ('__all__')
@@ -64,6 +63,7 @@ class Query(UserQuery,MeQuery,graphene.ObjectType):
     get_product = graphene.Field(Products,id = graphene.ID())
     get_search = graphene.List(Products,q=graphene.String())
     get_order = graphene.List(Orders,id = graphene.ID())
+    get_shipping = graphene.Field(ShippingAddresses,id = graphene.ID())
     def resolve_all_users(root,info):
         return ExtendUser.objects.all()
     def resolve_all_products(root,info):
@@ -116,7 +116,11 @@ class Query(UserQuery,MeQuery,graphene.ObjectType):
             return Order.objects.filter(id=id)
         else:
             raise Exception('unauthorized')
-
+    def resolve_get_shipping(self,info,id=None):
+        if info.context.user.is_authenticated:
+            return ShippingAddress.objects.get(id=id)
+        else:
+            raise Exception('unauthorized')
 class AddMutation(graphene.Mutation):
     class Arguments:
         id = graphene.ID()
@@ -151,9 +155,11 @@ class CashOrderMutation(graphene.Mutation):
         state = graphene.String()
         zipcode = graphene.String()
         total = graphene.Float()
+        phone = graphene.String()
+
     response = graphene.ID()
     @classmethod
-    def mutate(cls,root,info,total,address,city,state,zipcode):
+    def mutate(cls,root,info,total,address,city,state,zipcode,phone):
         customer = info.context.user.customer
         order,created = Order.objects.get_or_create(customer=customer,complete=False)
         transaction_id = datetime.datetime.now().timestamp()
@@ -169,7 +175,8 @@ class CashOrderMutation(graphene.Mutation):
                 address = address,
                 city =city,
                 state = state,
-                zipcode = zipcode
+                zipcode = zipcode,
+                phone = phone
             )
             order.save()
             print(a)

@@ -75,10 +75,11 @@ class WishListItem(models.Model):
 class ShippingAddress(models.Model):
     customer=models.ForeignKey(Customer,on_delete=models.SET_NULL,blank=True,null=True)
     order=models.ForeignKey(Order,on_delete=models.SET_NULL,blank=True,null=True)
+    phone = models.CharField(blank=True,null=True,max_length=10,default=0)
     address = models.CharField(max_length=300,blank=True,null=True)
     city = models.CharField(max_length=300,blank=True,null=True)
     state = models.CharField(max_length=300,blank=True,null=True)
     zipcode = models.CharField(max_length=300,blank=True,null=True)
     date_added = models.DateTimeField(auto_now_add=True)
     def __str__(self):
-        return self.address
+        return str(self.customer)

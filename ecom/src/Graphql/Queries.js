@@ -125,6 +125,13 @@ query GetOrder($id:ID!){
       quantity
       totalPrice
     }
+    shippingaddressSet{
+      address
+      city
+      zipcode
+      state
+      phone
+    }
   }
 }
 `

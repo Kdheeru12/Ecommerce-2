@@ -23,7 +23,7 @@ export default function Checkout() {
     }
     const complete = async () =>{
         const res = await completeorder({
-            variables:{address:obj.address,city:obj.city,state:obj.state,zipcode:obj.pincode,total:cartTotal}
+            variables:{address:obj.address,city:obj.city,state:obj.state,zipcode:obj.pincode,total:cartTotal,phone:obj.phone}
 
         }).catch(err =>setayerror(err))
         if(res){

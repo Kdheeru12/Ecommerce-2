@@ -52,8 +52,8 @@ mutation updateOrder($id:ID!,$action:String!){
 }
 `
 export const CASH_COMPLETE_ORDER = gql `
-mutation cashcompleteorder($address:String!,$city:String!,$state:String!,$zipcode:String!,$total:Float!){
-	cashCompleteOrder(address:$address,city:$city,state:$state,zipcode:$zipcode,total:$total){
+mutation cashcompleteorder($address:String!,$city:String!,$state:String!,$zipcode:String!,$total:Float!,$phone:String!){
+	cashCompleteOrder(address:$address,city:$city,state:$state,zipcode:$zipcode,total:$total,phone:$phone){
     response
   }
 
