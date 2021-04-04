@@ -1,26 +1,27 @@
 import React,{useEffect,useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import ProductList from './ProductList';
 import Wraper from './Wraper';
 import { useQuery } from '@apollo/client';
-import { ALL_PRODUCTS,ALL_SEARCH_PRODUCTS, SEARCH_PRODUCTS } from '../Graphql/Queries';
+import {SEARCH} from '../Graphql/Queries';
 import { css } from "@emotion/core";
-import ScaleLoader from 'react-spinners/ScaleLoader'
+import ScaleLoader from 'react-spinners/ScaleLoader';
+import queryString from 'query-string';
 
-function Search(props) {
+function Search() {
     var qs = require('qs');
     const [delayProduct,setDelayProduct] = useState(true)
     const [products, setproducts] = useState([]);
     const [hasMoreitems, sethasMoreitems] = useState(true)
     const [limit, setlimit] = useState(20);
-    const [name, setname] = useState("");
-    var { loading ,data} = useQuery(ALL_PRODUCTS)
-    console.log(qs.parse(props.location.search),{ ignoreQueryPrefix: true })
-    console.log(props.location.search)
+    const {search} = useLocation()
+    const {query} = queryString.parse(search)
+    console.log(query)
+    var { loading ,data} = useQuery(SEARCH,{variables:{query:query}})
     useEffect(() => {
         if (!loading) {
-            setproducts(data.allProducts)
+            setproducts(data.getSearch)
 
         } else {
             console.log('not')

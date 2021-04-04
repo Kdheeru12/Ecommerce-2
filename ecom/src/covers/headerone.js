@@ -8,12 +8,11 @@ import SideBar from './Sidenavbar';
 import TopBar from './Topbar';
 import Search from '../Images/search.png'
 import Settings from '../Images/setting.png'
-import CartContext from '../helpers/cart';
 
 export default function HeaderOne() {
 	const [loading, setloading] = useState(false);
 	const [open, setopen] = useState();
-	const {search,setsearch } = useContext(CartContext)
+	const [search, setsearch] = useState(null)
 	const handleScroll = () => {
         let number = window.pageXOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
         if (number >= 300) {
@@ -57,7 +56,7 @@ export default function HeaderOne() {
 	const history = useHistory()
 	const Submit = (e) =>{
 		e.preventDefault()
-		history.push('/products')
+		history.push(`/search?query=${search}`)
 		window.location.reload()
 	}
 

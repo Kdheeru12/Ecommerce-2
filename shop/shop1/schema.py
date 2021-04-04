@@ -9,6 +9,8 @@ from .models import *
 from graphene_django.filter import DjangoFilterConnectionField
 import datetime
 from graphql import GraphQLError
+# from django.db.models import Q
+
 
 # from .utils import cookieCart,cartData,guestOrder
 
@@ -56,6 +58,7 @@ class Query(UserQuery,MeQuery,graphene.ObjectType):
     all_orderItems = graphene.List(OrderItems,id = graphene.ID())
     all_wishlistitems = graphene.List(WishListItems)
     get_product = graphene.Field(Products,id = graphene.ID())
+    get_search = graphene.List(Products,q=graphene.String())
     def resolve_all_users(root,info):
         return ExtendUser.objects.all()
     def resolve_all_products(root,info):
@@ -98,6 +101,11 @@ class Query(UserQuery,MeQuery,graphene.ObjectType):
                 return 'invalid Id'
         else:
             return 'failed'
+    def resolve_get_search(self,info,q):
+        search_list = Product.objects.filter(
+            name__icontains = q
+        )
+        return search_list
 
 class AddMutation(graphene.Mutation):
     class Arguments:
@@ -182,7 +190,6 @@ class AddWishList(graphene.Mutation):
                 product = product
             )
             return AddWishList(response = 'added')
-  
                     
 class Mutation(AuthMutation,graphene.ObjectType):
     update_order = AddMutation.Field()
