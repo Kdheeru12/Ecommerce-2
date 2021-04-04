@@ -10,7 +10,6 @@ import Search from '../Images/search.png'
 import Settings from '../Images/setting.png'
 import CartContext from '../helpers/cart';
 
-
 export default function HeaderOne() {
 	const [loading, setloading] = useState(false);
 	const [open, setopen] = useState();

@@ -2,11 +2,14 @@
 import {Link} from 'react-router-dom';
 
 import React,{useContext} from 'react'
-import CartContext from '../helpers/cart';
 import { isLoggedInVar } from '..';
 
 export default function Topbar() {
         console.log(isLoggedInVar())
+        function logout() {
+            localStorage.removeItem('token')
+            window.location.reload()
+        }
         return (
             <div className="top-header">
                 <div className="container">
@@ -25,7 +28,17 @@ export default function Topbar() {
                                 <li className="mobile-wishlist"><Link to={`${process.env.PUBLIC_URL}/wishlist`}><i className="fa fa-heart" aria-hidden="true"></i>{'wishlist'}</Link></li>
                                 <li className="onhover-dropdown mobile-account">
                                     <i className="fa fa-user" aria-hidden="true"></i> {'my_account'}
+                                    {(isLoggedInVar) ?          
                                     <ul className="onhover-show-div">
+                                        <li>
+                                            <button onClick={()=>logout()} data-lng="en">logout</button>
+                                        </li>
+                                        <li>
+                                            <Link to={`${process.env.PUBLIC_URL}/signup`} data-lng="en">Register</Link>
+                                        </li>
+                                    </ul>
+                                    :
+                                    <ul className="onhover-show-div">                            
                                         <li>
                                             <Link to={`${process.env.PUBLIC_URL}/login`} data-lng="en">Login</Link>
                                         </li>
@@ -33,6 +46,7 @@ export default function Topbar() {
                                             <Link to={`${process.env.PUBLIC_URL}/signup`} data-lng="en">Register</Link>
                                         </li>
                                     </ul>
+                                }
                                 </li>
                             </ul>
                         </div>

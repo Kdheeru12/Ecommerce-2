@@ -1,0 +1,136 @@
+import React,{useEffect,useState} from 'react';
+import {Link} from 'react-router-dom';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import ProductList from './ProductList';
+import Wraper from './Wraper';
+import { useQuery } from '@apollo/client';
+import { ALL_PRODUCTS,ALL_SEARCH_PRODUCTS, SEARCH_PRODUCTS } from '../Graphql/Queries';
+import { css } from "@emotion/core";
+import ScaleLoader from 'react-spinners/ScaleLoader'
+
+function Search(props) {
+    var qs = require('qs');
+    const [delayProduct,setDelayProduct] = useState(true)
+    const [products, setproducts] = useState([]);
+    const [hasMoreitems, sethasMoreitems] = useState(true)
+    const [limit, setlimit] = useState(20);
+    const [name, setname] = useState("");
+    var { loading ,data} = useQuery(ALL_PRODUCTS)
+    console.log(qs.parse(props.location.search),{ ignoreQueryPrefix: true })
+    console.log(props.location.search)
+    useEffect(() => {
+        if (!loading) {
+            setproducts(data.allProducts)
+
+        } else {
+            console.log('not')
+        }
+        
+        setTimeout(() => {
+            setDelayProduct(false)  
+        }, 500);
+
+    }, [delayProduct])
+    const fetchMoreItems = () => {
+        if (limit >= products.length) {
+            sethasMoreitems(false)
+            return;
+        }
+        // a fake async api call
+        setTimeout(() => {
+            setlimit(limit+3)
+        }, 3000);
+
+    }
+    const override = css`
+    display: block;
+    margin: 10 auto;
+    padding:auto;
+    align-items:center;
+    text-align:center;
+    justify-content:center;
+`;
+    console.log(products);
+        return (
+            (delayProduct)?
+            <ScaleLoader css={override} color={'#F78205'} loading={delayProduct} height={50} width={4} radius={2} margin={2} />
+            :
+            <div>
+                <Wraper title={'Collection'}/>
+
+                <section className="section-b-space">
+                    <div className="collection-wrapper">
+                        <div className="container">
+                            <div className="row">
+                                <div className="collection-content col">
+                                    <div className="page-main-content">
+                                        <div className="top-banner-wrapper">
+                                            <a href="#">
+                                                <img src="/assets/images/mega-menu/2.jpg" className="img-fluid blur-up lazyload" alt="" /></a>
+                                            <div className="top-banner-content small-section pb-0">
+                                                <h4>fashion</h4>
+                                                <h5>Lorem Ipsum is simply dummy text of the printing and typesetting
+                                                    industry.</h5>
+                                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting
+                                                    industry. Lorem Ipsum has been the industry's standard dummy text
+                                                    ever since the 1500s, when an unknown printer took a galley of type
+                                                    and scrambled it to make a type specimen book. It has survived not
+                                                    only five centuries, but also the leap into electronic typesetting,
+                                                    remaining essentially unchanged. It was popularised in the 1960s
+                                                    with the release of Letraset sheets containing Lorem Ipsum passages,
+                                                    and more recently with desktop publishing software like Aldus
+                                                    PageMaker including versions of Lorem Ipsum.</p>
+                                            </div>
+                                        </div>
+                                        <div className="collection-product-wrapper">
+                                            <div className="section-t-space portfolio-section portfolio-padding metro-section port-col">
+                                                {products.length > 0 ?
+                                                    <InfiniteScroll
+                                                        dataLength={limit} //This is important field to render the next data
+                                                        next={fetchMoreItems}
+                                                        hasMore={hasMoreitems}
+                                                        loader={<div className="loading-cls"></div>}
+                                                        endMessage={
+                                                            <p className="seen-cls seen-it-cls">
+                                                                <b>Yay! You have seen it all</b>
+                                                            </p>
+                                                        }
+
+                                                    >
+                                                        <div className="isotopeContainer row">
+                                                            { products.slice(0,limit).map((product) =>
+                                                                <div className="col-xl-3 col-sm-6 isotopeSelector" key={product.id}>
+                                                                    <ProductList product={product} 
+                                                                                //  onAddToCompareClicked={() => addToCompare(product)}
+                                                                                //  onAddToWishlistClicked={() => addToWishlist(product)}
+                                                                                //  onAddToCartClicked={addToCart} 
+                                                                                key={product.id}
+                                                                                 
+                                                                                 />
+                                                                </div>)}
+                                                        </div>
+                                                    </InfiniteScroll>
+                                                    :
+                                                    <div className="row">
+                                                        <div className="col-sm-12 text-center section-b-space mt-5 no-found" >
+                                                            <img src={`${process.env.PUBLIC_URL}/assets/images/empty-search.jpg`} className="img-fluid mb-4" />
+                                                            <h3>Sorry! Couldn't find the product you were looking For!!!    </h3>
+                                                            <p>Please check if you have misspelt something or try searching with other words.</p>
+                                                            <Link to={`${process.env.PUBLIC_URL}/`} className="btn btn-solid">continue shopping</Link>
+                                                        </div>
+                                                    </div>
+                                                    }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        )
+    }
+
+
+export default Search

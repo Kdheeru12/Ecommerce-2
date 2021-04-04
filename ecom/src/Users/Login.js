@@ -7,7 +7,6 @@ import Error from '../covers/Error';
 import { LOGIN_USER } from '../Graphql/Mutation';
 import { useHistory } from 'react-router-dom';
 import { isLoggedInVar } from '..';
-import CartContext from '../helpers/cart';
 // pattern: /[6-9]{1}[0-9]{9}/
 export default function Login(props) {
     const [obj, setObj] = useState({});
@@ -17,7 +16,6 @@ export default function Login(props) {
     const [loginUser] = useMutation(LOGIN_USER)
     const [lerror, setlerror] = useState(null)
     const history = useHistory()
-    const {setauth} = useContext(CartContext)
     // console.log(hello);
     // console.log(props.location.state)
     // console.log();
@@ -38,7 +36,6 @@ export default function Login(props) {
                         isLoggedInVar(true)
                         history.push('/')
                         window.location.reload()
-                        setauth(true)
                     }
                     else if(res.data.tokenAuth.errors){
                         setlerror(res.data.tokenAuth.errors.nonFieldErrors[0].message)
