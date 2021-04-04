@@ -1,5 +1,5 @@
 import React, {useState,useContext} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import 'react-responsive-modal/styles.css';
 import { Modal } from 'react-responsive-modal';
 import { toast } from 'react-toastify';
@@ -8,24 +8,24 @@ import CartContext from '../helpers/cart';
 
 function ProductList({product}) {
     const [open, setOpen] = useState(false);
-    const [quantity, setqunatity] = useState(1);
     const onOpenModal = () => setOpen(true);
     const onCloseModal = () => setOpen(false);
-    const {addToCart,wishitems,addtowish} = useContext(CartContext)
-    
+    const {addToCart,wishitems,addtowish,cartid} = useContext(CartContext)
+    const history = useHistory()
     const plusQty = (id) => {
         console.log(id);
-        if(true) {
+        if(cartid.indexOf(id)===-1) {
             console.log('ddd');
             addToCart(id,'add')
+        }
+        else if(cartid.indexOf(id)!==-1){
+            history.push('/cart')
         }
     }
 
     return (
         
         <div className="product-box">
-
-
             <div className="img-wrapper">
                     <div className="front">
                         <Link to={`${process.env.PUBLIC_URL}/${product.id}/product-detail`} ><img
@@ -40,7 +40,7 @@ function ProductList({product}) {
                     <button  title="Add to cart" 
                     onClick={() =>plusQty(product.id)}
                     >
-                        <i className="fa fa-shopping-cart" aria-hidden="true"></i>
+                        <i style={{color: (cartid.indexOf(product.id)!==-1) ? "red" :"black"}} className="fa fa-shopping-cart" aria-hidden="true"></i>
                     </button>
                     <a  href="javascript:void(0)" title="Add to Wishlist" 
                     onClick={()=>addtowish(product.id)} 
@@ -142,7 +142,7 @@ function ProductList({product}) {
                                             </div> */}
                                         </div>
                                         <div className="product-buttons">
-                                            <button  className="btn btn-solid"  >add to cart</button>
+                                            <button onClick={() =>plusQty(product.id)} className="btn btn-solid"  >{(cartid.indexOf(product.id)!==-1) ? "go to cart" :"add to cart"}</button>
                                             {/* onClick={() => onAddToCartClicked(product, quantity)} */}
                                             <Link to={`${process.env.PUBLIC_URL}/${product.id}/product-detail`} className="btn btn-solid">view detail</Link>
                                         </div>

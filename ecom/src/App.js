@@ -19,7 +19,6 @@ function App() {
   return (
       <Router>
         <CartProvider>
-        
         <Switch>
           <Route path='/signup' component={Signup} />
           <Route path='/login' component={Login} />

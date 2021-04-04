@@ -1,16 +1,21 @@
 import React,{useContext} from 'react'
+import { useHistory } from 'react-router'
 import CartContext from '../helpers/cart'
 
 export default function Price({item}) {
-    const {addToCart,cartItems,cartTotal } = useContext(CartContext)
-    console.log(cartItems);
+    const {addToCart,cartid } = useContext(CartContext)
+    const history = useHistory()
     const plusQty = (id) => {
         console.log(id);
-        if(true) {
+        if(cartid.indexOf(id)===-1) {
             console.log('ddd');
             addToCart(id,'add')
         }
+        else if(cartid.indexOf(id)!==-1){
+            history.push('/cart')
+        }
     }
+
     const minusQty = (id,quantity) => {
         if(quantity >= 1) {
             addToCart(id,'remove')
@@ -77,8 +82,7 @@ export default function Price({item}) {
 
             </div>
             <div className="product-buttons" >
-                <a className="btn btn-solid" onClick={() =>plusQty(item.id)}>add to cart</a>
-                <a >add to wishlist</a>
+                <a className="btn btn-solid" onClick={() =>plusQty(item.id)}>{(cartid.indexOf(item.id)!==-1) ? "go to cart" :"add to cart"}</a>
             </div>
         </div>
     </div>

@@ -17,7 +17,6 @@ const CartProvider = (props) => {
   // const [cartTotal, setCartTotal] = useState(0);
   // const [quantity, setQuantity] = useState(1);
   // const [stock, setStock] = useState('InStock');
-  const [search, setsearch] = useState(" ");
   const [updateCart] = useMutation(UPDATE_ORDER);
   const [updatewishlist] = useMutation(UPDATE_WISHLIST)
   const [verifyauth] = useMutation(VERIFY_AUTH)
@@ -135,7 +134,10 @@ if(cartItems){
   a= a.reduce((a, b) => a + b, 0)
   var b = cartItems.map((item) => item.quantity)
   b = b.reduce((a,b)=>a+b,0)
-  
+
+  var ci = cartItems.map((item)=>
+    item.product.id
+  )
 }
 if (wishlist){
    var l = wishlist.map((item)=>(item.product.id))
@@ -152,11 +154,10 @@ if (wishlist){
         cartItems:cartItems,
         cartTotal:a,
         TotalItems:b,
-        search:search,
-        setsearch:setsearch,
         wishlist:wishlist,
         wishitems :l,
         addtowish:addtowish,
+        cartid:ci
       }}
     >
       {props.children}

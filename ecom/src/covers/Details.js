@@ -1,6 +1,10 @@
-import React from 'react'
+import React,{useContext} from 'react'
+import { useHistory } from 'react-router'
+import CartContext from '../helpers/cart'
 
 export default function Details({item}) {
+    const {wishitems,addtowish} = useContext(CartContext)
+    const history = useHistory()
     return (
         <div className="col-lg-4">
         <div className="product-right product-description-box">
@@ -32,10 +36,10 @@ export default function Details({item}) {
                         <li><a href="https://twitter.com/" target="_blank"><i className="fa fa-twitter"></i></a></li>
                         <li><a href="https://www.instagram.com/" target="_blank"><i className="fa fa-instagram"></i></a></li>
                     </ul>
-                        <button className="wishlist-btn" 
+                        <button  onClick={()=>addtowish(item.id)} className="wishlist-btn" 
                         // onClick={() => addToWishlistClicked(item)}
                         >
-                            <i className="fa fa-heart"></i><span className="title-font">Add To WishList</span>
+                            <i style={{color: (wishitems.indexOf(item.id)!==-1) ? "red" :"black"}} className="fa fa-heart"></i><span className="title-font">{(wishitems.indexOf(item.id)!==-1) ? "Added to WishList" :"Add to WishList"}</span>
                         </button>
                 </div>
             </div>
