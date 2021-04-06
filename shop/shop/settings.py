@@ -31,8 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'grappelli',
-    'admin_tools_stats',  # this must be BEFORE 'admin_tools' and 'django.contrib.admin'
+    # 'grappelli',
+    # 'admin_tools_stats',  # this must be BEFORE 'admin_tools' and 'django.contrib.admin'
     'django_nvd3',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'shop1.apps.Shop1Config',
     'graphene_django',
-    'graphql_jwt.refresh_token.apps.RefreshTokenConfig',
     'graphql_auth',
     'corsheaders',
     "django_filters",
@@ -136,9 +135,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
 MEDIA_URL = '/media/'
 STATIC_ROOT = '/static/'
-STATICFILES_DIRS = (
- os.path.join(BASE_DIR, 'static'),
-)
+# STATICFILES_DIRS = (
+#  os.path.join(BASE_DIR, 'static'),
+# )
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -180,8 +179,8 @@ GRAPHQL_JWT = {
     "JWT_LONG_RUNNING_REFRESH_TOKEN":False,
 }
 
-GRAPPELLI_ADMIN_TITLE = "ECOMMERCE"
+# GRAPPELLI_ADMIN_TITLE = "ECOMMERCE"
 
-ADMIN_CHARTS_NVD3_JS_PATH = 'bow/nvd3/build/nv.d3.js'
-ADMIN_CHARTS_NVD3_CSS_PATH = 'bow/nvd3/build/nv.d3.css'
-ADMIN_CHARTS_D3_JS_PATH = 'bow/d3/d3.js'
+# ADMIN_CHARTS_NVD3_JS_PATH = 'bow/nvd3/build/nv.d3.js'
+# ADMIN_CHARTS_NVD3_CSS_PATH = 'bow/nvd3/build/nv.d3.css'
+# ADMIN_CHARTS_D3_JS_PATH = 'bow/d3/d3.js'

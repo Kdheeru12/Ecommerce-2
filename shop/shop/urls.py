@@ -19,8 +19,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin_tools_stats/', include('admin_tools_stats.urls')),
-    path('grappelli/', include('grappelli.urls')), # grappelli URLS
+    # path('admin_tools_stats/', include('admin_tools_stats.urls')),
+    # path('grappelli/', include('grappelli.urls')), # grappelli URLS
     path('admin/', admin.site.urls),
     path('',include('shop1.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
