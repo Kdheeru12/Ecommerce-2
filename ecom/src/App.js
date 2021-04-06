@@ -5,7 +5,6 @@ import ProductList from './components/Cart';
 import Login from './Users/Login';
 import Layout from './covers/Layout';
 import Signup from './Users/Signup';
-import test from './test';
 import ProductHome from './components/ProductsHome';
 import CartProvider from './helpers/cart/CartContext';
 import Cart from './components/Cart';
@@ -18,10 +17,11 @@ import Search from './components/Search';
 function App() {
   return (
       <Router>
-        <CartProvider>
+        
         <Switch>
           <Route path='/signup' component={Signup} />
           <Route path='/login' component={Login} />
+          <CartProvider>
           <Layout>
           <Route exact path='/' component={ProductHome}/>
           <Route path='/products' component={ProductHome}/>
@@ -32,9 +32,8 @@ function App() {
           <Route path='/ordersuccess' component={OrderSuccess} />
           <Route path='/search' component={Search}/>
           </Layout>
+          </CartProvider>
         </Switch>
-        
-        </CartProvider>
       </Router>
   );
 }

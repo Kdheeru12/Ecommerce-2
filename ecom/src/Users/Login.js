@@ -27,8 +27,11 @@ export default function Login(props) {
             
                 const res =  await loginUser({
                     variables:{username:data.email,password:data.password}
-                }).catch(err =>setayerror(err))
-                console.log(res);
+                }).catch(err =>{
+                    setayerror('invalid credientals')
+                    setlerror('invalid credientals')
+                })
+                console.log('invalid credientals');
                 if(res){
                     if(res.data.tokenAuth.success){
                         localStorage.setItem('token',res.data.tokenAuth.token)
@@ -38,7 +41,8 @@ export default function Login(props) {
                         window.location.reload()
                     }
                     else if(res.data.tokenAuth.errors){
-                        setlerror(res.data.tokenAuth.errors.nonFieldErrors[0].message)
+                        console.log(res.data.tokenAuth.errors)
+                        setlerror('invalid crediantls')
                     }
                 }
             }
@@ -73,7 +77,7 @@ export default function Login(props) {
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="review">Password</label>
-                                            <span className="error-message">{errors.email && 'enter a valid email address'}</span>
+                                            <span className="error-message">{errors.password && 'enter a valid email address'}</span>
                                             <input type="password" className="form-control" id="review"
                                                    placeholder="Enter your password" name='password' ref={register({ required: true,pattern: /^\S*$/ })} onChange={setStateFromInput}  />
                                         </div>
