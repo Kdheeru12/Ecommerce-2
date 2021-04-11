@@ -101,9 +101,8 @@ export default function Myorderd() {
                                 <div className="col-sm-12 empty-cart-cls text-center">
                                     <img src={`${process.env.PUBLIC_URL}/assets/images/icon-empty-cart.png`} className="img-fluid mb-4" alt="" />
                                     <h3>
-                                        <strong>Your Cart is Empty</strong>
+                                        <strong>Your have not placed any orders </strong>
                                     </h3>
-                                    <h4>Explore more shortlist some items.</h4>
                                 </div>
                             </div>
                         </div>

@@ -34,7 +34,7 @@ export default function Topbar() {
                                             <button onClick={()=>logout()} data-lng="en">logout</button>
                                         </li>
                                         <li>
-                                            <Link to={`${process.env.PUBLIC_URL}/signup`} data-lng="en">Register</Link>
+                                            <Link to={`${process.env.PUBLIC_URL}/myorders`} data-lng="en">My orders</Link>
                                         </li>
                                     </ul>
                                     :

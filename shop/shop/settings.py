@@ -140,15 +140,6 @@ STATIC_ROOT = '/static/'
 # )
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-EMAIL_HOST = 'smtp.gmail.com'
-
-EMAIL_PORT = 587
-
-EMAIL_HOST_USER = 'yagneshreddyjeemains2018@gmail.com'
-
-EMAIL_HOST_PASSWORD = 'kyr2nd@gmail.com'
 
 
 AUTH_USER_MODEL = 'shop1.ExtendUser'

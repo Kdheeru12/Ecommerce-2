@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from graphene_django.views import GraphQLView
 
 urlpatterns = [
-    path('',views.hello),
+    path('h/',views.hello),
     path("graphl",csrf_exempt(GraphQLView.as_view(graphiql=True)))
 
 ]
