@@ -24,9 +24,9 @@ export default function Login(props) {
         if (data !== '') {
             console.log('ddd');
             const sent = async () => {
-            
+                console.log(data.email)
                 const res =  await loginUser({
-                    variables:{username:data.email,password:data.password}
+                    variables:{email:data.email,password:data.password}
                 }).catch(err =>{
                     setayerror('invalid credientals')
                     setlerror('invalid credientals')
@@ -70,7 +70,7 @@ export default function Login(props) {
                                 <div className="theme-card">
                                     <form onSubmit={handleSubmit(onSubmit)} className="theme-form">
                                         <div className="form-group">
-                                        <label htmlFor="review">Phone Number</label>
+                                        <label htmlFor="review">email</label>
                                         <span className="error-message">{errors.email && 'enter a valid email address'}</span>
                                             <input type="text" className="form-control" id="review"
                                                    placeholder="Enter your Number"  name="email"  ref={register({ required: true,pattern: /^\S+@\S+$/i  })} onChange={setStateFromInput} />

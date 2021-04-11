@@ -12,6 +12,7 @@ import OrderSuccess from './components/Order-success';
 import ProductDetail from './components/ProductDetail';
 import Wishlist from './components/Wishlist';
 import Search from './components/Search';
+import Myorderd from './components/Myorders';
 // import ProductAdmin from './Dashboard/ProductAdmin';
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
           <Route path='/checkout' component={Checkout} />
           <Route path='/ordersuccess' component={OrderSuccess} />
           <Route path='/search' component={Search}/>
+          <Route path='/myorders' component={Myorderd} />
           </Layout>
           </CartProvider>
         </Switch>

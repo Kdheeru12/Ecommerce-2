@@ -113,7 +113,11 @@ class Query(UserQuery,MeQuery,graphene.ObjectType):
         return search_list
     def resolve_get_order(self,info,id=None):
         if info.context.user.is_authenticated:
-            return Order.objects.filter(id=id)
+            customer = info.context.user.customer
+            if id != None:
+                return Order.objects.filter(id=id)
+            else:
+                return Order.objects.filter(customer=customer,complete=True).order_by('-date_orderd')
         else:
             raise Exception('unauthorized')
     def resolve_get_shipping(self,info,id=None):

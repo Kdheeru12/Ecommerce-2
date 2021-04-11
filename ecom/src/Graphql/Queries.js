@@ -136,3 +136,15 @@ query GetOrder($id:ID!){
   }
 }
 `
+export const GET_ORDERS = gql`
+query GetOrders{
+  getOrder {
+  id
+  dateOrderd
+  transactionId
+  ordertotal
+  acceptorder
+  declineorder
+}
+}
+`

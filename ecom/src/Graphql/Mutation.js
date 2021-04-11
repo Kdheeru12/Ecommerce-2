@@ -14,11 +14,11 @@ mutation ADD($email:String!,$username:String!,$password:String!){
 
 
   }
-  `;
+`;
 
 export const LOGIN_USER = gql `
-mutation TOKEN($username:String!,$password:String!){
-    tokenAuth(username:$username,password:$password){
+mutation TOKEN($email:String!,$password:String!){
+    tokenAuth(email:$email,password:$password){
       success
       errors
       token      
