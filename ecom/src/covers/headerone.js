@@ -8,6 +8,7 @@ import SideBar from './Sidenavbar';
 import TopBar from './Topbar';
 import Search from '../Images/search.png'
 import Settings from '../Images/setting.png'
+import Offers from '../covers/Offers'
 
 export default function HeaderOne() {
 	const [loading, setloading] = useState(false);
@@ -68,7 +69,7 @@ export default function HeaderOne() {
 					<div className="mobile-fix-option"></div>
 					{/*Top Header Component*/}
 					<TopBar/>
-
+					
 					<div className="container">
 						<div className="row">
 							<div className="col-sm-12">

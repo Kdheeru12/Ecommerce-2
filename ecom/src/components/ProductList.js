@@ -70,14 +70,14 @@ function ProductList({product}) {
             </div>
             <div className="product-detail">
                 <div>
-                    <div className="rating">
-                        {5}
-                    </div>
                     <Link to={`${process.env.PUBLIC_URL}/${product.id}/product-detail`}>
                         <h6>{product.name}</h6>
                     </Link>
-                    <h4>{}{product.price}
-                        <del><span className="money">{}{product.price}</span></del></h4>
+                    <h4>{product.offerPercentage!==0 ? product.price - (product.price*product.offerPercentage)/100 :product.price}
+                        {product.offerPercentage!==0 ?
+                        <del><span className="money">{product.price}</span></del>:''}
+                        <span style={{color:product.offerPercentage !==0 ? "red" :"black"}} className="money">{}{product.offerPercentage !==0 ? product.offerPercentage : ''}</span></h4>
+
                     {/* {product.variants?
                     <ul className="color-variant">
                         {product.variants.map((vari, i) => {
@@ -100,9 +100,10 @@ function ProductList({product}) {
                                 <div className="col-lg-6 rtl-text">
                                     <div className="product-right">
                                         <h2> {product.name} </h2>
-                                        <h3>{}{product.price}
-                                            <del><span className="money">{}{product.price}</span></del>
-                                        </h3>
+                                        <h4>{product.offerPercentage!==0 ? product.price - (product.price*product.offerPercentage)/100 :product.price}
+                                        {product.offerPercentage!==0 ?
+                                        <del><span className="money">{product.price}</span></del>:''}
+                                        <span style={{color:product.offerPercentage !==0 ? "red" :"black"}} className="money">{}{product.offerPercentage !==0 ? `${product.offerPercentage}%` : ''}</span></h4>
                                         {product.variants?
                                         <ul className="color-variant">
                                             {product.variants.map((vari, i) =>

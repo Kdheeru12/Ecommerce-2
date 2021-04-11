@@ -23,6 +23,8 @@ query{
     name
     price
     image
+    inOffer
+    offerPercentage
   }
   }
 `
