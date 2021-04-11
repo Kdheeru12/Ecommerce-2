@@ -114,6 +114,7 @@ query GetOrder($id:ID!){
     id
     ordertotal
     transactionId
+    dateOrderd
     orderitemSet {
       product {
         id
@@ -145,6 +146,13 @@ query GetOrders{
   ordertotal
   acceptorder
   declineorder
+  orderitemSet {
+    	product{
+        id
+        name
+      }
+      quantity
+    }
 }
 }
 `

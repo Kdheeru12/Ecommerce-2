@@ -48,7 +48,6 @@ export default function Myorderd() {
                                     <th scope="col">transsaction id</th>
                                     <th scope="col">product list</th>
                                     <th scope="col">price</th>
-                                    <th scope="col">action</th>
                                     <th scope="col">total</th>
                                 </tr>
                                 </thead>
@@ -59,34 +58,27 @@ export default function Myorderd() {
                                     <tbody key={order.id}>
                                         <tr>
                                             <td>
-                                                <Link to={`${process.env.PUBLIC_URL}//product-detail`}>
+                                                <Link to={`${process.env.PUBLIC_URL}/${order.id}/order-detail`}>
                                                 <h2 className="td-color">{order.transactionId}</h2>
                                                 </Link>
                                             </td>
-                                            <td><Link to={`${process.env.PUBLIC_URL}//product-detail`}>{order.ordertotal}</Link>
-                                                <div className="mobile-cart-content row">
-                                                    <div className="col-xs-3">
-                                                        {/* <div className="qty-box">
-                                                            <div className="input-group">
-                                                                <input type="text" name="quantity"z
-                                                                        className="form-control input-number" defaultValue={1} />
-                                                            </div>
-                                                        </div> */}
-                                                        
-                                                    </div>
-                                                    <div className="col-xs-3">
-                                                        <h2 className="td-color">{order.ordertotal}</h2>
-                                                    </div>
-                                                </div>
+                                            <td><Link to={`${process.env.PUBLIC_URL}/${order.id}/order-detail`}>
+                                                <ol>
+                                                {order.orderitemSet.map((product)=>
+                                                    <diV key={product.id}>
+                                                    <li>{product.product.name} X {product.quantity} </li>
+                                                    </diV>
+                                                    )}
+                                                </ol> 
+                                                 
+                                           </Link>
                                             </td>
                                             <td><h2>{order.ordertotal}</h2></td>
-                                            <td>
-                                                {/* {(item.qty >= item.stock)? 'out of Stock' : ''} */}
-                                            </td>
-                                            <td><h2 className="td-color">{'333'}</h2></td>
+
+                                            <td><h2 className="td-color">{new Date (order.dateOrderd).toDateString()}</h2></td>
                                         </tr>
                                     </tbody> 
-                                        ))}
+                                ))}
                             </table>
                         </div>
                     </div>

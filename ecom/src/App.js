@@ -13,6 +13,7 @@ import ProductDetail from './components/ProductDetail';
 import Wishlist from './components/Wishlist';
 import Search from './components/Search';
 import Myorderd from './components/Myorders';
+import OrderDetails from './components/Order-details';
 // import ProductAdmin from './Dashboard/ProductAdmin';
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
           <Route path='/ordersuccess' component={OrderSuccess} />
           <Route path='/search' component={Search}/>
           <Route path='/myorders' component={Myorderd} />
+          <Route path='/:id/order-detail' component={OrderDetails} />
           </Layout>
           </CartProvider>
         </Switch>
