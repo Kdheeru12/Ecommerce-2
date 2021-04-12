@@ -1,7 +1,8 @@
 
 from django.http.response import HttpResponse
 import smtplib
-
+from .schema import *
+from .utils import *
 
 # Create your views here.
 def hello(request):
