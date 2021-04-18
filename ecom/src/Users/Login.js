@@ -4,9 +4,11 @@ import { useForm } from 'react-hook-form';
 import LayoutTwo from '../covers/Layout1';
 import { useApolloClient, useMutation } from '@apollo/client';
 import Error from '../covers/Error';
-import { LOGIN_USER } from '../Graphql/Mutation';
+import { LOGIN_USER, SOCIAL_AUTH } from '../Graphql/Mutation';
 import { useHistory } from 'react-router-dom';
 import { isLoggedInVar } from '..';
+import { GoogleLogin } from 'react-google-login';
+
 // pattern: /[6-9]{1}[0-9]{9}/
 export default function Login(props) {
     const [obj, setObj] = useState({});
@@ -15,6 +17,7 @@ export default function Login(props) {
     const hello = (props.location.state) || null;
     const [loginUser] = useMutation(LOGIN_USER)
     const [lerror, setlerror] = useState(null)
+    const [socialAuth] = useMutation(SOCIAL_AUTH)
     const history = useHistory()
     // console.log(hello);
     // console.log(props.location.state)
@@ -51,7 +54,32 @@ export default function Login(props) {
             errors.showMessages();
         }
     };                                                                                                                                                                                                                                                                                                                                                          
+    const responseGoogle = (response) => {
+        if (response.accessToken){
+            const sent = async () => {
+            const res =  await socialAuth({
+                variables:{provider:'google-oauth2',accessToken:response.accessToken}
+            }).catch(err =>{
+                setayerror('invalid credientals')
+                setlerror('invalid credientals')
+            })
+            console.log('invalid credientals');
+            if(res){
+                if(res.data.socialAuth.token){
+                    localStorage.setItem('token',res.data.socialAuth.token)
 
+                    isLoggedInVar(true)
+                    history.push('/')
+                    window.location.reload()
+                }
+            }
+        }
+        sent()
+    }
+       
+        console.log(response.accessToken)
+
+    }
     const setStateFromInput = (event) => {
         obj[event.target.name] = event.target.value;
         setObj(obj)
@@ -66,6 +94,11 @@ export default function Login(props) {
                         <div className="row">
                             <div className="col-lg-6">
                                 <h3>Login</h3>
+                                <GoogleLogin
+  clientId="550479282033-urgcaheu8mi4ecovr05n4g4jho73opvo.apps.googleusercontent.com"
+  onSuccess={responseGoogle}
+  isSignedIn={false}
+/>                                
                                 <span>{hello &&  `user registered email ${hello} please login`}</span>
                                 <div className="theme-card">
                                     <form onSubmit={handleSubmit(onSubmit)} className="theme-form">

@@ -9,6 +9,8 @@ from .models import *
 from graphene_django.filter import DjangoFilterConnectionField
 import datetime
 from graphql import GraphQLError
+import graphql_social_auth
+
 # from django.db.models import Q
 
 
@@ -53,6 +55,7 @@ class AuthMutation(graphene.ObjectType):
     verify_token = mutations.VerifyToken.Field()
     refresh_token = mutations.RefreshToken.Field()
     revoke_token = mutations.RevokeToken.Field()
+    social_auth = graphql_social_auth.SocialAuthJWT.Field()
 
 class Query(UserQuery,MeQuery,graphene.ObjectType):
     all_users = graphene.List(Users)

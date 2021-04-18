@@ -76,7 +76,16 @@ mutation VERIFY($token:String!){
   
 }
 `
-
+export const SOCIAL_AUTH = gql`
+mutation SocialAuth($provider: String!, $accessToken: String!) {
+  socialAuth(provider: $provider, accessToken: $accessToken) {
+    social {
+      uid
+    }
+    token
+  }
+}
+`
 
 // export const LOGIN_USER = gql`
 // mutation TOKEN($username:String!,$password:String!){
