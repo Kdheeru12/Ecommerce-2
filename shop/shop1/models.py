@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 # Create your models here.
 class ExtendUser(AbstractUser):
-    email = models.EmailField(blank=False, max_length=254,verbose_name='email')
+    email = models.EmailField(blank=False,unique=True,max_length=254,verbose_name='email')
 
     USERNAME_FIELD = 'username'
     EMAIL_FIELD='email'
@@ -23,7 +23,7 @@ class Customer(models.Model):
     name = models.CharField(max_length=300,blank=True,null=True)
     email = models.CharField(max_length=300,blank=True,null=True)
     def __str__(self):
-        return self.name
+        return self.user.username
 class Product(models.Model):
     name = models.CharField(max_length=300,blank=True,null=True)
     price = models.FloatField()

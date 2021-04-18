@@ -60,10 +60,10 @@ export default function Login(props) {
             const res =  await socialAuth({
                 variables:{provider:'google-oauth2',accessToken:response.accessToken}
             }).catch(err =>{
-                setayerror('invalid credientals')
-                setlerror('invalid credientals')
+                console.log(err)
+                setayerror('please login with google')
+                setlerror('please login with google')
             })
-            console.log('invalid credientals');
             if(res){
                 if(res.data.socialAuth.token){
                     localStorage.setItem('token',res.data.socialAuth.token)

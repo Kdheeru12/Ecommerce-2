@@ -74,7 +74,10 @@ class Query(UserQuery,MeQuery,graphene.ObjectType):
     def resolve_all_cartItems(root,info):
         if info.context.user.is_authenticated:
             # print('ddd')
-            customer = info.context.user.customer
+            try:
+                customer = info.context.user.customer
+            except:
+                customer = Customer.objects.create(user=info.context.user,)
             order,created = Order.objects.get_or_create(customer=customer,complete=False)
             # print(order)
             # print(created)
