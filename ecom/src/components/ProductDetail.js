@@ -1,9 +1,7 @@
 import React ,{useState,useEffect,useRef} from 'react';
 import ProductDescription from './ProductDescription';
 import Wraper from './Wraper';
-import Slider from 'react-slick';
 import Details from '../covers/Details';
-import Smallimages from '../covers/Smallimages';
 import Price from '../covers/Price';
 import { useQuery } from '@apollo/client'
 import { useParams } from 'react-router'

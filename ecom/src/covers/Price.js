@@ -24,11 +24,10 @@ export default function Price({item}) {
     return (
         <div className="col-lg-4">
         <div className="product-right product-form-box">
-            <h4>
-                <del>{item.price}</del>
-                <span>{'item.discount'}% off</span>
-            </h4>
-            <h3>{(item.price)} </h3>
+            <h3>{item.offerPercentage!==0 ? item.price - (item.price*item.offerPercentage)/100 :item.price}
+            {item.offerPercentage!==0 ?
+            <del><span className="money">{item.price}</span></del>:''}
+            </h3><span style={{color:item.offerPercentage !==0 ? "red" :"black"}} className="money">{}{item.offerPercentage !==0 ? `${item.offerPercentage}% off` : ''}</span>
             <div className="product-description border-product">
                 <h6 className="product-title">Time Reminder</h6>
                 <div className="timer">

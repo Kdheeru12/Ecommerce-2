@@ -24,7 +24,6 @@ function ProductList({product}) {
     }
 
     return (
-        
         <div className="product-box">
             <div className="img-wrapper">
                     <div className="front">
@@ -76,7 +75,7 @@ function ProductList({product}) {
                     <h4>{product.offerPercentage!==0 ? product.price - (product.price*product.offerPercentage)/100 :product.price}
                         {product.offerPercentage!==0 ?
                         <del><span className="money">{product.price}</span></del>:''}
-                        <span style={{color:product.offerPercentage !==0 ? "red" :"black"}} className="money">{}{product.offerPercentage !==0 ? product.offerPercentage : ''}</span></h4>
+                    </h4><span style={{color:product.offerPercentage !==0 ? "red" :"black"}} className="money">{}{product.offerPercentage !==0 ? `${product.offerPercentage}% off` : ''}</span>
 
                     {/* {product.variants?
                     <ul className="color-variant">
@@ -103,7 +102,7 @@ function ProductList({product}) {
                                         <h4>{product.offerPercentage!==0 ? product.price - (product.price*product.offerPercentage)/100 :product.price}
                                         {product.offerPercentage!==0 ?
                                         <del><span className="money">{product.price}</span></del>:''}
-                                        <span style={{color:product.offerPercentage !==0 ? "red" :"black"}} className="money">{}{product.offerPercentage !==0 ? `${product.offerPercentage}%` : ''}</span></h4>
+                                        </h4><span style={{color:product.offerPercentage !==0 ? "red" :"black"}} className="money">{}{product.offerPercentage !==0 ? `${product.offerPercentage}% off` : ''}</span>
                                         {product.variants?
                                         <ul className="color-variant">
                                             {product.variants.map((vari, i) =>

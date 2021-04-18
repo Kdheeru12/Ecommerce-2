@@ -48,6 +48,8 @@ query{
       name
       image
       price
+      inOffer
+      offerPercentage
     }
   	dateAdded
   }
@@ -90,6 +92,8 @@ query getproduct($id:ID!){
     price
     avail
     image
+    inOffer
+    offerPercentage
     wishlistitemSet{
       id
     }
@@ -105,6 +109,8 @@ query{
       name
       image
       price
+      inOffer
+      offerPercentage
     }
   	dateAdded
   }

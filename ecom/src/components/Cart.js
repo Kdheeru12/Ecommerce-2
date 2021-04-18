@@ -113,7 +113,7 @@ export default function Cart() {
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td><h2>{items.price}</h2></td>
+                                            <td><h2>{items.price}</h2> <span></span> </td>
                                             <td>
                                                 <div className="qty-box">
                                                     <div className="input-group">

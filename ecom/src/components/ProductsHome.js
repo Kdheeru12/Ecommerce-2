@@ -4,7 +4,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import ProductList from './ProductList';
 import Wraper from './Wraper';
 import { useQuery } from '@apollo/client';
-import { ALL_PRODUCTS,ALL_SEARCH_PRODUCTS, SEARCH_PRODUCTS } from '../Graphql/Queries';
+import { ALL_PRODUCTS,  } from '../Graphql/Queries';
 import { css } from "@emotion/core";
 import ScaleLoader from 'react-spinners/ScaleLoader'
 
@@ -26,9 +26,8 @@ function ProductHome() {
         } else {
             console.log('not')
         }
-        
         setTimeout(() => {
-            setDelayProduct(false)  
+            setDelayProduct(false)
         }, 500);
 
     }, [delayProduct])
@@ -102,12 +101,11 @@ function ProductHome() {
                                                         <div className="isotopeContainer row">
                                                             { products.slice(0,limit).map((product) =>
                                                                 <div className="col-xl-3 col-sm-6 isotopeSelector" key={product.id}>
-                                                                    <ProductList product={product} 
+                                                                    <ProductList product={product}
                                                                                 //  onAddToCompareClicked={() => addToCompare(product)}
                                                                                 //  onAddToWishlistClicked={() => addToWishlist(product)}
-                                                                                //  onAddToCartClicked={addToCart} 
+                                                                                //  onAddToCartClicked={addToCart}
                                                                                 key={product.id}
-                                                                                 
                                                                                  />
                                                                 </div>)}
                                                         </div>
@@ -133,9 +131,6 @@ function ProductHome() {
             </div>
         )
     }
-// const mapStateToProps = (state) => ({
-//     products: getVisibleproducts(state.data, state.filters),
-//     symbol: state.data.symbol,
-// })
+    
 
 export default ProductHome

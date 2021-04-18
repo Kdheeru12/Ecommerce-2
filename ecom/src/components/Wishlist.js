@@ -84,7 +84,10 @@ export default function Wishlist() {
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td><h2>{items.product.price}</h2></td>
+                                            <td><h2>{items.product.offerPercentage!==0 ? items.product.price - (items.product.price*items.product.offerPercentage)/100 :items.product.price}
+                                        {items.product.offerPercentage!==0 ?
+                                        <del><span className="money">{items.product.price}</span></del>:''}</h2><span style={{color:items.product.offerPercentage !==0 ? "red" :"black"}} className="money">{}{items.product.offerPercentage !==0 ? `${items.product.offerPercentage}% off` : ''}</span>
+                                        </td>
                                             <td>
                                                 <div className="qty-box">
                                                     <div className="input-group">

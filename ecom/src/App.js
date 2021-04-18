@@ -19,7 +19,6 @@ import OrderDetails from './components/Order-details';
 function App() {
   return (
       <Router>
-        
         <Switch>
           <Route path='/signup' component={Signup} />
           <Route path='/login' component={Login} />

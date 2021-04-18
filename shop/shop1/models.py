@@ -74,7 +74,10 @@ class OrderItem(models.Model):
         return str(self.order)
     @property
     def get_total(self):
-        total = self.product.price * self.quantity
+        if self.product.in_offer:
+            total = (self.product.price -(self.product.price*self.product.offer_percentage)/100) * self.quantity
+        else:
+            total = self.product.price * self.quantity
         return total
 
 class WishListItem(models.Model):
