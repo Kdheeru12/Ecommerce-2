@@ -5,6 +5,7 @@ query{
     edges{
       node{
         username
+        id
       }
     }
   }
