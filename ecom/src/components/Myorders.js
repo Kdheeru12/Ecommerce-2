@@ -48,7 +48,7 @@ export default function Myorderd() {
                                     <th scope="col">transsaction id</th>
                                     <th scope="col">product list</th>
                                     <th scope="col">price</th>
-                                    <th scope="col">total</th>
+                                    <th scope="col">Date Ordered</th>
                                 </tr>
                                 </thead>
                                 {
@@ -85,9 +85,6 @@ export default function Myorderd() {
                     <div className="row cart-buttons">
                         <div className="col-6">
                             <Link to={`${process.env.PUBLIC_URL}/`} className="btn btn-solid">continue shopping</Link>
-                        </div>
-                        <div className="col-6">
-                            <Link to={`${process.env.PUBLIC_URL}/checkout`} className="btn btn-solid">check out</Link>
                         </div>
                     </div>
                 </div>

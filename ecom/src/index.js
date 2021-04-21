@@ -8,6 +8,7 @@ import { onError } from "@apollo/client/link/error";
 import Error from './covers/Error';
 import { setContext } from '@apollo/client/link/context';
 import * as ServiceWorker from './serviceworker'
+import { HOST } from './Constants';
 export  const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors)
     graphQLErrors.map(({ message, locations, path }) =>
@@ -26,7 +27,7 @@ export const isLoggedInVar = makeVar(!!localStorage.getItem("token"));
 
 const link = from([
   errorLink,
-  new HttpLink({uri:'http://127.0.0.1:8000/graphl'}),
+  new HttpLink({uri:HOST}),
 ])
  
 const authLink = setContext((_, { headers }) => {

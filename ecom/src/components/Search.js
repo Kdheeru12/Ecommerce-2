@@ -8,6 +8,7 @@ import {SEARCH} from '../Graphql/Queries';
 import { css } from "@emotion/core";
 import ScaleLoader from 'react-spinners/ScaleLoader';
 import queryString from 'query-string';
+import dog from '../dog.jpg'
 
 function Search() {
     var qs = require('qs');
@@ -69,18 +70,7 @@ function Search() {
                                             <a href="#">
                                                 <img src="/assets/images/mega-menu/2.jpg" className="img-fluid blur-up lazyload" alt="" /></a>
                                             <div className="top-banner-content small-section pb-0">
-                                                <h4>fashion</h4>
-                                                <h5>Lorem Ipsum is simply dummy text of the printing and typesetting
-                                                    industry.</h5>
-                                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting
-                                                    industry. Lorem Ipsum has been the industry's standard dummy text
-                                                    ever since the 1500s, when an unknown printer took a galley of type
-                                                    and scrambled it to make a type specimen book. It has survived not
-                                                    only five centuries, but also the leap into electronic typesetting,
-                                                    remaining essentially unchanged. It was popularised in the 1960s
-                                                    with the release of Letraset sheets containing Lorem Ipsum passages,
-                                                    and more recently with desktop publishing software like Aldus
-                                                    PageMaker including versions of Lorem Ipsum.</p>
+                                                <h4>Products</h4>
                                             </div>
                                         </div>
                                         <div className="collection-product-wrapper">
@@ -114,7 +104,7 @@ function Search() {
                                                     :
                                                     <div className="row">
                                                         <div className="col-sm-12 text-center section-b-space mt-5 no-found" >
-                                                            <img src={`${process.env.PUBLIC_URL}/assets/images/empty-search.jpg`} className="img-fluid mb-4" />
+                                                            <img src={dog} className="img-fluid mb-4" />
                                                             <h3>Sorry! Couldn't find the product you were looking For!!!    </h3>
                                                             <p>Please check if you have misspelt something or try searching with other words.</p>
                                                             <Link to={`${process.env.PUBLIC_URL}/`} className="btn btn-solid">continue shopping</Link>
