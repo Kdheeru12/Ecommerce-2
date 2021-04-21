@@ -228,3 +228,5 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET ='7pr24naAYLbesmMKN6VOASTG'
 # ADMIN_CHARTS_NVD3_JS_PATH = 'bow/nvd3/build/nv.d3.js'
 # ADMIN_CHARTS_NVD3_CSS_PATH = 'bow/nvd3/build/nv.d3.css'
 # ADMIN_CHARTS_D3_JS_PATH = 'bow/d3/d3.js'
+
+SRS_DOCUMENT = https://docs.google.com/document/d/1uFSbLrQesWY6L7Z-ZvHAchJVEmTdXYR1R8WG7FJMxSs/edit?usp=sharing
