@@ -17,6 +17,7 @@ import OrderDetails from './components/Order-details';
 // import ProductAdmin from './Dashboard/ProductAdmin';
 
 function App() {
+  console.log(process.env);
   return (
       <Router>
         <Switch>

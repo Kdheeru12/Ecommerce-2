@@ -89,7 +89,7 @@ console.log('shsy')
                         <div className="col-lg-3 col-sm-10 col-xs-12">
                             
                                     <div>
-                                        <img src={`http://127.0.0.1:8000/media/${item.image}`}  className="img-fluid image_zoom_cls-0" />
+                                        <img src={`${process.env.REACT_APP_BASE_URL}/media/${item.image}`}  className="img-fluid image_zoom_cls-0" />
                                     </div>
                             
                         </div>

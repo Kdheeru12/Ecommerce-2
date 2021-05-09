@@ -65,7 +65,7 @@ export default function Cart() {
                                         <tr>
                                             <td>
                                                 <Link to={`${process.env.PUBLIC_URL}/${items.product.id}/product-detail`}>
-                                                    <img src={`http://127.0.0.1:8000/media/${items.product.image}`}/>
+                                                    <img src={`${process.env.REACT_APP_BASE_URL}/media/${items.product.image}`}/>
                                                 </Link>
                                             </td>
                                             <td><Link to={`${process.env.PUBLIC_URL}/${items.product.id}/product-detail`}>{items.product.name}</Link>

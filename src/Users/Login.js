@@ -11,6 +11,8 @@ import { GoogleLogin } from 'react-google-login';
 
 // pattern: /[6-9]{1}[0-9]{9}/
 export default function Login(props) {
+    require('dotenv').config()
+console.log(require('dotenv').config());
     const [obj, setObj] = useState({});
     const { register, handleSubmit, errors } = useForm(); 
     const [ayerror,setayerror] = useState(null)
@@ -93,7 +95,7 @@ export default function Login(props) {
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-6">
-                                <h3>Login</h3>
+                                <h3>Login {process.env.BASE_URL}</h3>
                                 <GoogleLogin
   clientId="550479282033-urgcaheu8mi4ecovr05n4g4jho73opvo.apps.googleusercontent.com"
   onSuccess={responseGoogle}

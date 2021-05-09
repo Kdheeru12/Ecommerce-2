@@ -9,6 +9,7 @@
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.6.2",
     "axios": "^0.21.1",
+    "dotenv": "^9.0.1",
     "file-loader": "^6.2.0",
     "graphql": "^15.5.0",
     "html-webpack-plugin": "^4.5.1",

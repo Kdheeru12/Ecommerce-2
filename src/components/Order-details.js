@@ -72,7 +72,7 @@ export default function OrderDetails() {
                                 {allItems.orderitemSet && allItems.orderitemSet.map((item) => {
                                 return <div className="row product-order-detail" key={item.id}>
                                             <div className="col-3">
-                                                <img src={`http://127.0.0.1:8000/media/${item.product.image}`} alt="" className="img-fluid" />
+                                                <img src={`${process.env.REACT_APP_BASE_URL}/media/${item.product.image}`} alt="" className="img-fluid" />
                                             </div>
                                             <div className="col-3 order_detail">
                                                 <div>

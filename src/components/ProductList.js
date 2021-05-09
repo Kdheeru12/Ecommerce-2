@@ -31,7 +31,7 @@ function ProductList({product}) {
                         // src={product.variants?
                         //     this.state.image?this.state.image:product.variants[0].images
                         //     :product.pictures[0]}
-                        src={`http://127.0.0.1:8000/media/${product.image}`}
+                        src={`${process.env.REACT_APP_BASE_URL}/media/${product.image}`}
                         className="img-fluid"
                         alt="" /></Link>
                     </div>
@@ -93,7 +93,7 @@ function ProductList({product}) {
                             <div className="row">
                                 <div className="col-lg-6  col-xs-12">
                                     <div className="quick-view-img">
-                                        <img src={`http://127.0.0.1:8000/media/${product.image}`} alt="" className="img-fluid" />
+                                        <img src={`${process.env.REACT_APP_BASE_URL}/media/${product.image}`} alt="" className="img-fluid" />
                                     </div>
                                 </div>
                                 <div className="col-lg-6 rtl-text">
