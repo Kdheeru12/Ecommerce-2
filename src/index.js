@@ -7,7 +7,6 @@ import { ApolloClient, ApolloProvider, InMemoryCache,HttpLink,from,makeVar } fro
 import { onError } from "@apollo/client/link/error";
 import Error from './covers/Error';
 import { setContext } from '@apollo/client/link/context';
-import * as ServiceWorker from './serviceworker'
 import { HOST } from './Constants';
 export  const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors)
@@ -79,5 +78,5 @@ ReactDOM.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
-ServiceWorker.register()
+
 
